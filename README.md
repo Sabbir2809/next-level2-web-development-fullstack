@@ -5,3 +5,5 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ## Mission-1: Be a Redux Reaper
 
 ### Module-1: State Management in React
+
+### Module-2: Introduction to Redux
