@@ -10,15 +10,24 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { addTask } from "@/redux/features/todoSlice";
+import { useAppDispatch } from "@/redux/hook";
 import { FormEvent, useState } from "react";
 
 export default function AddTodoModal() {
-  const [task, setTask] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useAppDispatch();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log({ task, description });
+
+    const taskDetails = {
+      id: Date.now().toString(),
+      title,
+      description,
+    };
+    dispatch(addTask(taskDetails));
   };
 
   return (
@@ -34,10 +43,10 @@ export default function AddTodoModal() {
         <form onSubmit={onSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="task" className="text-right">
-                Task
+              <Label htmlFor="title" className="text-right">
+                Title
               </Label>
-              <Input onBlur={(e) => setTask(e.target.value)} id="task" className="col-span-3" />
+              <Input onBlur={(e) => setTitle(e.target.value)} id="title" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
