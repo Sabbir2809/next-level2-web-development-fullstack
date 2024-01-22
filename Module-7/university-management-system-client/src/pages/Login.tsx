@@ -1,8 +1,9 @@
-import { Button } from "antd";
-import { FieldValues, useForm } from "react-hook-form";
+import { Button, Row } from "antd";
+import { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import UMSForm from "../components/form/UMSForm";
+import UMSInput from "../components/form/UMSInput";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { useAppDispatch } from "../redux/hooks";
@@ -12,9 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: { id: "A-0001", password: "ADMIN" },
-  });
+  const defaultValues = { id: "A-0001", password: "ADMIN" };
 
   const [login] = useLoginMutation();
 
@@ -38,17 +37,13 @@ const Login = () => {
   };
 
   return (
-    <UMSForm onSubmit={onsubmit}>
-      <div>
-        <label htmlFor="id">ID:</label>
-        <input type="text" id="id" {...register("id")} />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" {...register("password")} />
-      </div>
-      <Button htmlType="submit">Login</Button>
-    </UMSForm>
+    <Row justify="center" align="middle" style={{ height: "100vh" }}>
+      <UMSForm onSubmit={onsubmit} defaultValues={defaultValues}>
+        <UMSInput type="text" name="id" label="ID" />
+        <UMSInput type="password" name="password" label="Password" />
+        <Button htmlType="submit">Login</Button>
+      </UMSForm>
+    </Row>
   );
 };
 
