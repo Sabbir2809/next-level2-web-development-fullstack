@@ -12,14 +12,22 @@ router.post(
   validateRequest(AcademicSemesterValidations.createAcademicSemesterValidationSchema),
   AcademicSemesterControllers.createAcademicSemester
 );
+
 router.get(
   "/",
-  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
   AcademicSemesterControllers.getAllAcademicSemesters
 );
-router.get("/:semesterId", AcademicSemesterControllers.getSingleAcademicSemester);
+
+router.get(
+  "/:semesterId",
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
+  AcademicSemesterControllers.getSingleAcademicSemester
+);
+
 router.patch(
   "/:semesterId",
+  auth(USER_ROLE.superAdmin, USER_ROLE.admin),
   validateRequest(AcademicSemesterValidations.updateAcademicSemesterValidationSchema),
   AcademicSemesterControllers.getSingleAcademicSemester
 );

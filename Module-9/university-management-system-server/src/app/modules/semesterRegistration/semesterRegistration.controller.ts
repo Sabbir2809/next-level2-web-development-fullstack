@@ -19,7 +19,7 @@ const getAllSemesterRegistrations = catchAsync(async (req, res) => {
   const result = await SemesterRegistrationServices.getSemesterRegistrationsFromDB(req.query);
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Semester Registration is Retrieved Successfully",
     data: result,
@@ -32,7 +32,7 @@ const getSingleSemesterRegistration = catchAsync(async (req, res) => {
   const result = await SemesterRegistrationServices.getSingleSemesterRegistrationFromDB(id);
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Semester Registration is Retrieved Successfully",
     data: result,
@@ -45,7 +45,7 @@ const updateSemesterRegistration = catchAsync(async (req, res) => {
   const result = await SemesterRegistrationServices.updateSemesterRegistrationIntoDB(id, req.body);
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Semester Registration Updated Successfully",
     data: result,

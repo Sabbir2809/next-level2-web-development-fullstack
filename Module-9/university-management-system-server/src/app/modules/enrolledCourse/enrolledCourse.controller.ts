@@ -7,7 +7,7 @@ const createEnrolledCourse = catchAsync(async (req, res) => {
   const result = await EnrolledCourseServices.createEnrolledCourseIntoDB(userId, req.body);
 
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: 201,
     success: true,
     message: "Student is enrolled Successfully",
     data: result,

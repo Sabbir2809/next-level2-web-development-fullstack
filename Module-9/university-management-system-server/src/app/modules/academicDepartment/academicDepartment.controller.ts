@@ -19,7 +19,7 @@ const getAllAcademicDepartments = catchAsync(async (req, res) => {
   const result = await AcademicDepartmentServices.getAllAcademicDepartmentsFromDB();
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Get All Academic Department Successfully",
     data: result,
@@ -32,7 +32,7 @@ const getSingleAcademicDepartment = catchAsync(async (req, res) => {
   const result = await AcademicDepartmentServices.getSingleAcademicDepartmentFromDB(departmentId);
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Get Single Academic Department Successfully",
     data: result,
@@ -45,7 +45,7 @@ const updateAcademicDepartment = catchAsync(async (req, res) => {
   const result = await AcademicDepartmentServices.updateAcademicDepartmentIntoDB(departmentId, req.body);
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Academic Department Updated Successfully",
     data: result,

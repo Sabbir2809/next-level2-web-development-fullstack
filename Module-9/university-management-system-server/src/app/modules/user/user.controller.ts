@@ -22,7 +22,7 @@ const createFaculty = catchAsync(async (req, res) => {
   const result = await UserServices.createFacultyIntoDB(req.file, password, facultyData);
 
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: 201,
     success: true,
     message: "Faculty is created successfully",
     data: result,
@@ -35,7 +35,7 @@ const createAdmin = catchAsync(async (req, res) => {
   const result = await UserServices.createAdminIntoDB(req.file, password, adminData);
 
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: 201,
     success: true,
     message: "Admin is created successfully",
     data: result,
@@ -47,7 +47,7 @@ const getMe = catchAsync(async (req, res) => {
   const result = await UserServices.getMe(userId, role);
 
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: 201,
     success: true,
     message: "User is Retrieved Successfully",
     data: result,
@@ -60,7 +60,7 @@ const changeStatus = catchAsync(async (req, res) => {
   const result = await UserServices.changeStatus(id, req.body);
 
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: 201,
     success: true,
     message: "Status is Updated Successfully",
     data: result,
