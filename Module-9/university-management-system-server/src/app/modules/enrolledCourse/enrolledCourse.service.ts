@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import QueryBuilder from "../../builder/QueryBuilder";
 import AppError from "../../errors/AppError";
 import { Course } from "../course/course.model";
 import { Faculty } from "../faculty/faculty.model";
@@ -134,6 +135,33 @@ const createEnrolledCourseIntoDB = async (userId: string, payload: IEnrolledCour
   }
 };
 
+const getMyEnrolledCourseFromDB = async (userId: string, query: Record<string, unknown>) => {
+  const student = await Student.findOne({ id: userId });
+
+  if (!student) {
+    throw new AppError(404, "Student not found !");
+  }
+
+  const enrolledCourseQuery = new QueryBuilder(
+    EnrolledCourse.find({ student: student._id }).populate(
+      "semesterRegistrationId academicSemesterId academicFacultyId academicDepartmentId offeredCourseId courseId studentId facultyId"
+    ),
+    query
+  )
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await enrolledCourseQuery.modelQuery;
+  const meta = await enrolledCourseQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
+};
+
 const updateEnrolledCourseMarksIntoDB = async (facultyId: string, payload: Partial<IEnrolledCourse>) => {
   const { semesterRegistrationId, offeredCourseId, studentId, courseMarks } = payload;
 
@@ -175,10 +203,7 @@ const updateEnrolledCourseMarksIntoDB = async (facultyId: string, payload: Parti
     const { classTest1, midTerm, classTest2, finalTerm } = isCourseBelongToFaculty.courseMarks;
 
     const totalMarks =
-      Math.ceil(classTest1 * 0.1) +
-      Math.ceil(midTerm * 0.3) +
-      Math.ceil(classTest2 * 0.1) +
-      Math.ceil(finalTerm * 0.5);
+      Math.ceil(classTest1) + Math.ceil(midTerm) + Math.ceil(classTest2) + Math.ceil(finalTerm);
 
     const result = calculateGradeAndPoints(totalMarks);
 
@@ -204,5 +229,6 @@ const updateEnrolledCourseMarksIntoDB = async (facultyId: string, payload: Parti
 
 export const EnrolledCourseServices = {
   createEnrolledCourseIntoDB,
+  getMyEnrolledCourseFromDB,
   updateEnrolledCourseMarksIntoDB,
 };

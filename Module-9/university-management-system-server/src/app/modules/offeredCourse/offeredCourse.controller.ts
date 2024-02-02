@@ -23,20 +23,22 @@ const getAllOfferedCourses = catchAsync(async (req, res) => {
     statusCode: 200,
     success: true,
     message: "Offered Course is Retrieved Successfully",
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 
 const getMyOfferedCourses = catchAsync(async (req, res) => {
   const { userId } = (req as JwtPayload).user;
   // service
-  const result = await OfferedCourseServices.getMyOfferedCourses(userId);
+  const result = await OfferedCourseServices.getMyOfferedCourses(userId, req.query);
   // send response
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: "Offered Course is Retrieved Successfully",
-    data: result,
+    meta: result.meta,
+    data: result.result,
   });
 });
 

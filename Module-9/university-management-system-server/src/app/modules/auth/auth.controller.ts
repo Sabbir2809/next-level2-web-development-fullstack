@@ -11,10 +11,13 @@ const loginUser = catchAsync(async (req, res) => {
   res.cookie("refreshToken", refreshToken, {
     secure: config.NODE_DEV === "production",
     httpOnly: true,
+    sameSite: "none",
+    maxAge: 1000 * 60 * 60 * 24 * 365,
   });
+
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "User is Logged in Successfully",
     data: {
@@ -30,7 +33,7 @@ const changePassword = catchAsync(async (req, res) => {
   const result = await AuthServices.changePassword((req as any).user, passwordData);
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Password is Updated Successfully",
     data: result,
@@ -44,7 +47,7 @@ const refreshToken = catchAsync(async (req, res) => {
 
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Access token is retrieved Successfully",
     data: result,
@@ -58,7 +61,7 @@ const forgetPassword = catchAsync(async (req, res) => {
 
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Reset link is generated Successfully",
     data: result,
@@ -72,7 +75,7 @@ const resetPassword = catchAsync(async (req, res) => {
 
   // send response
   sendResponse(res, {
-    statusCode: 201,
+    statusCode: 200,
     success: true,
     message: "Password Reset Successfully",
     data: result,

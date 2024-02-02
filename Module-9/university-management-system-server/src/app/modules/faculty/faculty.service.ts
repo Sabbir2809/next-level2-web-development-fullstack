@@ -7,7 +7,13 @@ import { IFaculty } from "./faculty.interface";
 import { Faculty } from "./faculty.model";
 
 const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
-  const facultyQuery = new QueryBuilder(Faculty.find().populate("academicDepartmentId"), query)
+  const facultyQuery = new QueryBuilder(
+    Faculty.find()
+      .populate("userId")
+      .populate("admissionSemesterId")
+      .populate("academicDepartmentId academicFacultyId"),
+    query
+  )
     .search(FacultySearchableFields)
     .filter()
     .sort()
@@ -15,7 +21,12 @@ const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await facultyQuery.modelQuery;
-  return result;
+  const meta = await facultyQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
 };
 
 const getSingleFacultyFromDB = async (id: string) => {

@@ -116,7 +116,12 @@ const getOfferedCoursesFromDB = async (query: Record<string, unknown>) => {
   };
 };
 
-const getMyOfferedCourses = async (userId: string) => {
+const getMyOfferedCourses = async (userId: string, query: Record<string, unknown>) => {
+  // pagination setup
+  let page = Number(query?.page) || 1;
+  let limit = Number(query?.limit) || 10;
+  let skip = (page - 1) * limit;
+
   // find the student
   const student = await Student.findOne({ id: userId });
   if (!student) {
@@ -129,7 +134,7 @@ const getMyOfferedCourses = async (userId: string) => {
     throw new AppError(404, "There is no ongoing semester registration");
   }
 
-  const result = await OfferedCourse.aggregate([
+  const aggregationQuery = [
     {
       $match: {
         semesterRegistrationId: currentOngoingRegistrationSemester?._id,
@@ -145,9 +150,131 @@ const getMyOfferedCourses = async (userId: string) => {
         as: "course",
       },
     },
-  ]);
+    {
+      $unwind: "$course",
+    },
+    {
+      $lookup: {
+        from: "enrolledcourses",
+        let: {
+          currentOngoingRegistrationSemester: currentOngoingRegistrationSemester._id,
+          currentStudent: student._id,
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  {
+                    $eq: ["$semesterRegistrationId", "$$currentOngoingRegistrationSemester"],
+                  },
+                  {
+                    $eq: ["$studentId", "$$currentStudent"],
+                  },
+                  {
+                    $eq: ["$isEnrolled", true],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+        as: "enrolledCourses",
+      },
+    },
+    {
+      $lookup: {
+        from: "enrolledcourses",
+        let: {
+          currentStudent: student._id,
+        },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  {
+                    $eq: ["$studentId", "$$currentStudent"],
+                  },
+                  {
+                    $eq: ["$isCompleted", true],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+        as: "completedCourses",
+      },
+    },
+    {
+      $addFields: {
+        completedCourseIds: {
+          $map: {
+            input: "$completedCourses",
+            as: "completed",
+            in: "$$completed.courseId",
+          },
+        },
+      },
+    },
+    {
+      $addFields: {
+        isPreRequisitesFulFilled: {
+          $or: [
+            {
+              $eq: ["$courseId.preRequisiteCourses", []],
+            },
+            {
+              $setIsSubset: ["$course.preRequisiteCourses.courseId", "$completedCourseIds"],
+            },
+          ],
+        },
+        isAlreadyEnrolled: {
+          $in: [
+            "$course._id",
+            {
+              $map: {
+                input: "$enrolledCourses",
+                as: "enroll",
+                in: "$$enroll.courseId",
+              },
+            },
+          ],
+        },
+      },
+    },
+    {
+      $match: {
+        isAlreadyEnrolled: false,
+        isPreRequisitesFulFilled: true,
+      },
+    },
+  ];
 
-  return result;
+  const paginationQuery = [
+    {
+      $skip: skip,
+    },
+    {
+      $limit: limit,
+    },
+  ];
+
+  const result = await OfferedCourse.aggregate([...aggregationQuery, ...paginationQuery]);
+
+  const total = (await OfferedCourse.aggregate(aggregationQuery)).length;
+  const totalPage = Math.ceil(result.length / limit);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPage,
+    },
+    result,
+  };
 };
 
 const getSingleOfferedCourseFromDB = async (id: string) => {
