@@ -12,12 +12,14 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 
 ### Module-4: Fundamentals of RTK Query
 
-### Module-5: University Management System Part-1
+### Module-5: University Management System Client Part-1
 
-### Module-6: University Management System Part-2
+### Module-6: University Management System Client Part-2
 
-### Module-7: University Management System Part-3
+### Module-7: University Management System Client Part-3
 
 ### Module-8: Assignment-5
 
-### Module-8: University Management System Server Part-10
+### Module-9: University Management System Server Part-10
+
+### Module-10: University Management System Client Part-3
