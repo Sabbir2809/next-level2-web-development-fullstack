@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { ReactNode } from "react";
 import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
@@ -8,21 +9,26 @@ type TFormProps = {
 
 type TFormConfig = {
   defaultValues?: Record<string, any>;
+  resolver?: any;
 };
 
-const UMSForm = ({ onSubmit, children, defaultValues }: TFormProps) => {
+const UMForm = ({ onSubmit, children, defaultValues, resolver }: TFormProps) => {
+  // form default value set
   const formConfig: TFormConfig = {};
   if (defaultValues) {
     formConfig["defaultValues"] = defaultValues;
   }
-  const methods = useForm({
-    defaultValues: formConfig,
-  });
+  if (resolver) {
+    formConfig["resolver"] = resolver;
+  }
+  const methods = useForm(formConfig);
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <Form onFinish={methods.handleSubmit(onSubmit)} layout="vertical">
+        {children}
+      </Form>
     </FormProvider>
   );
 };
-export default UMSForm;
+export default UMForm;

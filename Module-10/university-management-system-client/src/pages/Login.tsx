@@ -2,8 +2,8 @@ import { Button, Row } from "antd";
 import { FieldValues } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import UMSForm from "../components/form/UMSForm";
-import UMSInput from "../components/form/UMSInput";
+import UMForm from "../components/form/UMForm";
+import UMInput from "../components/form/UMInput";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { TUser, setUser } from "../redux/features/auth/authSlice";
 import { useAppDispatch } from "../redux/hooks";
@@ -38,11 +38,11 @@ const Login = () => {
 
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <UMSForm onSubmit={onsubmit} defaultValues={defaultValues}>
-        <UMSInput type="text" name="id" label="ID" />
-        <UMSInput type="password" name="password" label="Password" />
+      <UMForm onSubmit={onsubmit} defaultValues={defaultValues}>
+        <UMInput type="text" name="id" label="ID" />
+        <UMInput type="password" name="password" label="Password" />
         <Button htmlType="submit">Login</Button>
-      </UMSForm>
+      </UMForm>
     </Row>
   );
 };

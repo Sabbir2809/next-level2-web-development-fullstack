@@ -13,7 +13,7 @@ const MainLayout = () => {
   };
 
   return (
-    <Layout style={{ height: "100vh" }}>
+    <Layout style={{ height: "100%" }}>
       {/* sidebar component */}
       <Sidebar></Sidebar>
       <Layout>
