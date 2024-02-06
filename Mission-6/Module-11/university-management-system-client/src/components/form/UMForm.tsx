@@ -23,9 +23,14 @@ const UMForm = ({ onSubmit, children, defaultValues, resolver }: TFormProps) => 
   }
   const methods = useForm(formConfig);
 
+  const submit: SubmitHandler<FieldValues> = (data) => {
+    onSubmit(data);
+    methods.reset();
+  };
+
   return (
     <FormProvider {...methods}>
-      <Form onFinish={methods.handleSubmit(onSubmit)} layout="vertical">
+      <Form onFinish={methods.handleSubmit(submit)} layout="vertical">
         {children}
       </Form>
     </FormProvider>

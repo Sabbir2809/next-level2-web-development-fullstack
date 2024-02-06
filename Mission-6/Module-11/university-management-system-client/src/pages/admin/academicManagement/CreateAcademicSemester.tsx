@@ -9,7 +9,7 @@ import { semesterOptions } from "../../../constants/semester";
 import { useAddAcademicSemesterMutation } from "../../../redux/features/admin/academicManagementApi";
 import { academicSemesterSchema } from "../../../schemas/academicManagement.schema";
 import { TAcademicSemester } from "../../../types/academicManagement.type";
-import { TResponse } from "../../../types/global";
+import { TResponse } from "../../../types/global.type";
 
 const CreateAcademicSemester = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();
