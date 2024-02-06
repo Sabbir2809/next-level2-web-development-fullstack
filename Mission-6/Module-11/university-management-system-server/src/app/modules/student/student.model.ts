@@ -99,6 +99,11 @@ const studentSchema = new Schema<IStudent>(
   { versionKey: false, timestamps: true, toJSON: { virtuals: true } }
 );
 
+//virtual
+studentSchema.virtual("fullName").get(function () {
+  return `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}`;
+});
+
 // query middleware
 studentSchema.pre("find", async function (next) {
   this.find({ isDeleted: { $ne: true } });

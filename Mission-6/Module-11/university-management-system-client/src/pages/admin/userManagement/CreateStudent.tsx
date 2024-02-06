@@ -1,5 +1,5 @@
-import { Button, Col, Divider, Row } from "antd";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import UMDatePicker from "../../../components/form/UMDatePicker";
 import UMForm from "../../../components/form/UMForm";
 import UMInput from "../../../components/form/UMInput";
@@ -66,7 +66,9 @@ const CreateStudent = () => {
     };
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data.image);
     addStudent(formData);
+    console.log(data);
   };
   return (
     <Row>
@@ -91,6 +93,21 @@ const CreateStudent = () => {
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <UMSelect name="bloodGroup" label="Blood Group" options={bloodGroupOptions} />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture">
+                    <Input
+                      type="file"
+                      value={value?.fileName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
+              />
             </Col>
           </Row>
           <Divider>Contact Info.</Divider>
