@@ -45,11 +45,8 @@ const studentDefaultValues = {
 
 const CreateStudent = () => {
   const [addStudent] = useAddStudentMutation();
-
   const { data: sData, isLoading: sIsLoading } = useGetAllSemestersQuery(undefined);
-  const { data: dData, isLoading: dIsLoading } = useGetAcademicDepartmentsQuery(undefined, {
-    skip: sIsLoading,
-  });
+  const { data: dData, isLoading: dIsLoading } = useGetAcademicDepartmentsQuery(undefined);
 
   const semesterOptions = sData?.data?.map((item) => ({
     value: item._id,
@@ -59,6 +56,7 @@ const CreateStudent = () => {
     value: item._id,
     label: item.name,
   }));
+
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     const studentData = {
       password: import.meta.env.VITE_STUDENT_PASSWORD,
@@ -68,7 +66,6 @@ const CreateStudent = () => {
     formData.append("data", JSON.stringify(studentData));
     formData.append("file", data.image);
     addStudent(formData);
-    console.log(data);
   };
   return (
     <Row>
@@ -104,6 +101,7 @@ const CreateStudent = () => {
                       value={value?.fileName}
                       {...field}
                       onChange={(e) => onChange(e.target.files?.[0])}
+                      size="large"
                     />
                   </Form.Item>
                 )}
