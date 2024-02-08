@@ -27,7 +27,6 @@ const SemesterRegistration = () => {
       minCredit: Number(data.minCredit),
       maxCredit: Number(data.maxCredit),
     };
-    console.log(semesterData);
 
     try {
       const res = (await addRegisteredSemester(semesterData)) as TResponse<any>;
