@@ -27,3 +27,5 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module-11: University Management System Client Part-5
 
 ### Module-12: University Management System Client Part-6
+
+### Module-12: University Management System Client Part-7
