@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const defaultValues = { id: "A-0001", password: "ADMIN" };
+  const defaultValues = { id: "2025010001", password: "student" };
 
   const [login] = useLoginMutation();
 
@@ -26,11 +26,14 @@ const Login = () => {
       };
       const res = await login(userInfo).unwrap();
       const user = verifyToken(res.data.accessToken) as TUser;
-
       dispatch(setUser({ user: user, token: res.data.accessToken }));
-
       toast.success("logged In", { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/dashboard`);
+
+      if (res.data.needsPasswordChange) {
+        navigate(`/change-password`);
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
     } catch (error) {
       toast.error("Something Went Wrong", { id: toastId, duration: 2000 });
     }
