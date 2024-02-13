@@ -236,8 +236,6 @@ const updateEnrolledCourseMarksIntoDB = async (facultyId: string, payload: Parti
 
     const result = calculateGradeAndPoints(totalMarks);
 
-    console.log(result);
-
     modifiedData.grade = result.grade;
     modifiedData.gradePoints = result.gradePoints;
     modifiedData.isCompleted = true;
