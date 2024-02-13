@@ -72,8 +72,7 @@ const OfferCourse = () => {
       endTime: moment(new Date(data.endTime)).format("HH:mm"),
     };
 
-    const res = await addOfferedCourse(offeredCourseData);
-    console.log(res);
+    await addOfferedCourse(offeredCourseData);
   };
 
   return (
@@ -85,7 +84,7 @@ const OfferCourse = () => {
             label="Semester Registrations"
             options={semesterRegistrationOptions}
           />
-          <UMSelect name="academicFaculty" label="Academic Faculty" options={academicFacultyOptions} />
+          <UMSelect name="academicFacultyId" label="Academic Faculty" options={academicFacultyOptions} />
           <UMSelect
             name="academicDepartmentId"
             label="Academic Department"

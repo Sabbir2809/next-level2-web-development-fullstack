@@ -135,6 +135,35 @@ const createEnrolledCourseIntoDB = async (userId: string, payload: IEnrolledCour
   }
 };
 
+const getAllEnrolledCoursesFromDB = async (facultyId: string, query: Record<string, unknown>) => {
+  const faculty = await Faculty.findOne({ id: facultyId });
+
+  if (!faculty) {
+    throw new AppError(404, "Faculty not found !");
+  }
+
+  const enrolledCourseQuery = new QueryBuilder(
+    EnrolledCourse.find({
+      facultyId: faculty._id,
+    }).populate(
+      "semesterRegistrationId academicSemesterId academicFacultyId academicDepartmentId offeredCourseId courseId studentId facultyId"
+    ),
+    query
+  )
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const result = await enrolledCourseQuery.modelQuery;
+  const meta = await enrolledCourseQuery.countTotal();
+
+  return {
+    meta,
+    result,
+  };
+};
+
 const getMyEnrolledCourseFromDB = async (userId: string, query: Record<string, unknown>) => {
   const student = await Student.findOne({ id: userId });
 
@@ -143,7 +172,7 @@ const getMyEnrolledCourseFromDB = async (userId: string, query: Record<string, u
   }
 
   const enrolledCourseQuery = new QueryBuilder(
-    EnrolledCourse.find({ student: student._id }).populate(
+    EnrolledCourse.find({ studentId: student._id }).populate(
       "semesterRegistrationId academicSemesterId academicFacultyId academicDepartmentId offeredCourseId courseId studentId facultyId"
     ),
     query
@@ -229,6 +258,7 @@ const updateEnrolledCourseMarksIntoDB = async (facultyId: string, payload: Parti
 
 export const EnrolledCourseServices = {
   createEnrolledCourseIntoDB,
+  getAllEnrolledCoursesFromDB,
   getMyEnrolledCourseFromDB,
   updateEnrolledCourseMarksIntoDB,
 };

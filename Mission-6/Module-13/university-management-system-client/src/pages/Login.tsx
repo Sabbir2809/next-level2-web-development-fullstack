@@ -13,8 +13,6 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const defaultValues = { id: "2025010001", password: "student" };
-
   const [login] = useLoginMutation();
 
   const onsubmit = async (data: FieldValues) => {
@@ -41,7 +39,7 @@ const Login = () => {
 
   return (
     <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <UMForm onSubmit={onsubmit} defaultValues={defaultValues}>
+      <UMForm onSubmit={onsubmit}>
         <UMInput type="text" name="id" label="ID" />
         <UMInput type="password" name="password" label="Password" />
         <Button htmlType="submit">Login</Button>
