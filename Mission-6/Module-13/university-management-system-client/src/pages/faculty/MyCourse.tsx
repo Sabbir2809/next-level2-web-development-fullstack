@@ -10,12 +10,12 @@ const MyCourse = () => {
 
   const { data: facultyCoursesData } = useGetAllFacultyCoursesQuery(undefined);
 
-  const semesterOptions = facultyCoursesData?.data?.map((item) => ({
+  const semesterOptions = facultyCoursesData?.data?.map((item: any) => ({
     label: `${item.academicSemesterId.name} ${item.academicSemesterId.year}`,
     value: item.semesterRegistrationId._id,
   }));
 
-  const courseOptions = facultyCoursesData?.data?.map((item) => ({
+  const courseOptions = facultyCoursesData?.data?.map((item: any) => ({
     label: item.courseId.title,
     value: item.courseId._id,
   }));

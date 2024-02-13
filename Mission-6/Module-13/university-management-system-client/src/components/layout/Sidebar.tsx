@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Layout, Menu } from "antd";
+import { ItemType, MenuItemType } from "antd/es/menu/hooks/useItems";
 import { TUser, selectCurrentToken } from "../../redux/features/auth/authSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { adminPaths } from "../../routes/admin.routes";
@@ -22,15 +24,18 @@ const Sidebar = () => {
     user = verifyToken(token);
   }
 
-  let sidebarItems;
+  let sidebarItems: ItemType<MenuItemType>[] = [];
   switch ((user as TUser).role) {
     case userRole.ADMIN:
+      //@ts-ignore
       sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN);
       break;
     case userRole.FACULTY:
+      //@ts-ignore
       sidebarItems = sidebarItemsGenerator(facultyPaths, userRole.FACULTY);
       break;
     case userRole.STUDENT:
+      //@ts-ignore
       sidebarItems = sidebarItemsGenerator(studentPaths, userRole.STUDENT);
       break;
 

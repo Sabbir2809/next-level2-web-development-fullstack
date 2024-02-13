@@ -1,4 +1,4 @@
-import { Button, Modal, Table } from "antd";
+import { Button, Modal, Table, TableColumnsType } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import UMForm from "../../components/form/UMForm";
@@ -17,7 +17,7 @@ const MyStudent = () => {
   ]);
 
   const tableData = facultyCoursesData?.data?.map(
-    ({ _id, studentId, semesterRegistrationId, offeredCourseId }) => ({
+    ({ _id, studentId, semesterRegistrationId, offeredCourseId }: any) => ({
       key: _id,
       name: studentId.fullName,
       roll: studentId.id,
@@ -27,7 +27,7 @@ const MyStudent = () => {
     })
   );
 
-  const columns = [
+  const columns: TableColumnsType<any> = [
     {
       key: "name",
       title: "Name",
@@ -44,7 +44,7 @@ const MyStudent = () => {
       title: "Action",
       key: "",
       align: "center",
-      render: (item) => {
+      render: (item: any) => {
         return (
           <div>
             <AddMarksModal studentInfo={item} />
@@ -85,8 +85,7 @@ const AddMarksModal = ({ studentInfo }: any) => {
         finalTerm: Number(data.finalTerm),
       },
     };
-    const res = await addMark(studentData);
-    console.log(res);
+    await addMark(studentData);
   };
 
   return (

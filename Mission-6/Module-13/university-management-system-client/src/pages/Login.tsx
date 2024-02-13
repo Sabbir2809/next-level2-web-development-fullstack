@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
+    <Row justify="center" align="middle" style={{ height: "100vh", backgroundColor: "whitesmoke" }}>
       <UMForm onSubmit={onsubmit}>
         <UMInput type="text" name="id" label="ID" />
         <UMInput type="password" name="password" label="Password" />
