@@ -28,4 +28,16 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 
 ### Module-12: University Management System Client Part-6
 
-### Module-12: University Management System Client Part-7
+### Module-13: University Management System Client Part-7
+
+### Module-14: Assignment-6
+
+---
+
+## Mission-7: Be a RDBMS Relational Model
+
+### Module 15: Database Essentials & Relational Model
+
+### Module 16: Database Normalization, Postgres Installation, and Application Insights
+
+### Module 17: PostgreSQL Essentials: Case Study Solutions, Database Management and Data Types
