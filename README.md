@@ -43,3 +43,5 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module 17: PostgreSQL Essentials: Case Study Solutions, Database Management and Data Types
 
 ### Module 18: PostgreSQL Fundamentals and Advanced Data Manipulation Techniques
+
+### Module 19: Managing Dates, Relationships And Understanding JOIN in PostgreSQL
