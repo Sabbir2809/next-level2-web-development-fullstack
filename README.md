@@ -34,7 +34,7 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 
 ---
 
-## Mission-7: Be a RDBMS Relational Model
+## Mission-7: Be a RDBMS Rockstar
 
 ### Module 15: Database Essentials & Relational Model
 
