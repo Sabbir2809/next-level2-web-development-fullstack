@@ -182,20 +182,6 @@ To select data from a table, use SELECT.
    GROUP BY habitat_id;
    ```
 
-## COPYING DATA
-
-1. To import data from a CSV file into a table:
-
-   ```sql
-   \copy animal FROM 'animal.csv' CSV HEADER
-   ```
-
-1. To export data from a query to a CSV file:
-
-   ```sql
-   \copy (SELECT * FROM animal) TO 'animal.csv' CSV HEADER
-   ```
-
 ## CASTING
 
 1. To change the type of a value, use the `::` operator:
