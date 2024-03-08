@@ -47,3 +47,11 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module 19: Managing Dates, Relationships And Understanding JOIN in PostgreSQL
 
 ### Module 20: Advanced Query Techniques and Database Objects in PostgreSQL
+
+### Module-21: Assignment-7
+
+---
+
+## Mission-8: Be a SQL Backend Braniac With Prisma
+
+### Module-22: Prisma ORM Fundamental
