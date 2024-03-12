@@ -55,3 +55,5 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ## Mission-8: Be a SQL Backend Braniac With Prisma
 
 ### Module-22: Prisma ORM Fundamental
+
+### Module-23: Prisma Relational Mastery
