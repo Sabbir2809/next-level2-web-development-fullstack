@@ -57,3 +57,7 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module-22: Prisma ORM Fundamental
 
 ### Module-23: Prisma Relational Mastery
+
+### Module-24: Prisma Advance Patterns
+
+### Module-25: Healthcare Project Initiation and Analysis
