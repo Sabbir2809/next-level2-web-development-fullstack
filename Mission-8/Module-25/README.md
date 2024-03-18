@@ -77,3 +77,7 @@ secure data management.
 1. Seamless integration for patients to pay consultation fees securely.
 1. Automated email notifications for appointment confirmations, invoices, and prescription delivery.
 1. Doctors can generate detailed prescriptions during and after consultations.
+
+## ERD
+
+![ERD](./ERD.png)
