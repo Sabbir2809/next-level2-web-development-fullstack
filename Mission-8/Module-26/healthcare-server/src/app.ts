@@ -1,22 +1,21 @@
 import cors from "cors";
-import express, { Application, Request, Response, urlencoded } from "express";
-import { AdminRoutes } from "./app/modules/Admin/admin.route";
-import { UserRoutes } from "./app/modules/User/user.route";
+import express, { Application, Request, Response } from "express";
+import router from "./app/routes/router";
 
-// instance
+// app instance
 const app: Application = express();
+
 // middleware
 app.use(express.json());
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// application routes
+app.use("/api/v1", router);
 
 // health check
 app.get("/", (req: Request, res: Response) => {
   res.send("Healthcare Server: All is Well");
 });
-
-// router
-app.use("/api/v1/user", UserRoutes);
-app.use("/api/v1/admin", AdminRoutes);
 
 export default app;
