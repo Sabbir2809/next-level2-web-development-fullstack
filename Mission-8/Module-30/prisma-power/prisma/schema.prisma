@@ -1,0 +1,62 @@
+// Prisma Setup
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+// Users Model
+model User {
+  id       String    @id @default(uuid())
+  username String    @unique
+  email    String    @unique
+  password String
+  isActive Boolean   @default(true)
+  blog     Blog[]
+  comment  Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user")
+}
+
+// Blogs Model
+model Blog {
+  id         String     @id @default(uuid())
+  title      String
+  content    String
+  visibility Visibility @default(PUBLIC)
+  authorId   String
+  author     User       @relation(fields: [authorId], references: [id])
+  comment    Comment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("blog")
+}
+
+// Comments Model
+model Comment {
+  id       String @id @default(uuid())
+  content  String
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+  blogId   String
+  blog     Blog   @relation(fields: [blogId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comment")
+}
