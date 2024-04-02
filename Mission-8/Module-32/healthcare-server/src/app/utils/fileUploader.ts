@@ -17,8 +17,7 @@ const uploadToCloudinary = async (file: TFile): Promise<UploadApiResponse> => {
     // Upload file to Cloudinary
     const result = await cloudinary.uploader.upload(file.path, { public_id: file.originalname });
     // Delete file from local system
-    await fs.promises.unlink(file.path);
-
+    await fs.unlinkSync(file.path);
     return result;
   } catch (error) {
     throw error;

@@ -1,4 +1,5 @@
 import { Request } from "express";
+import ApiError from "../../errors/ApiError";
 import { fileUploader } from "../../utils/fileUploader";
 import prisma from "../../utils/prisma";
 
@@ -9,10 +10,11 @@ const getAllSpecialtiesFormDB = async () => {
 
 const createSpecialtyIntoDB = async (req: Request) => {
   const file = req.file;
-  if (file) {
-    const uploadToCloudinary = await fileUploader.uploadToCloudinary(file);
-    req.body.icon = uploadToCloudinary?.secure_url;
+  if (!file) {
+    throw new ApiError(400, "file is required");
   }
+  const uploadToCloudinary = await fileUploader.uploadToCloudinary(file);
+  req.body.icon = uploadToCloudinary?.secure_url;
 
   const result = await prisma.specialties.create({
     data: req.body,
