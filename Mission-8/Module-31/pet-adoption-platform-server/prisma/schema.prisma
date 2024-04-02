@@ -1,0 +1,66 @@
+// prisma connection setup
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Model
+model User {
+  id              String            @id @default(uuid())
+  name            String
+  email           String            @unique
+  password        String
+  adoptionRequest AdoptionRequest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user")
+}
+
+// AdoptionRequest Model
+model AdoptionRequest {
+  id                     String @id @default(uuid())
+  userId                 String
+  user                   User   @relation(fields: [userId], references: [id])
+  petId                  String
+  pet                    Pet    @relation(fields: [petId], references: [id])
+  status                 Status @default(PENDING)
+  petOwnershipExperience String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("adoptionrequest")
+}
+
+// Pet Model
+model Pet {
+  id                   String            @id @default(uuid())
+  name                 String
+  species              String
+  breed                String
+  age                  Int
+  size                 String
+  location             String
+  description          String
+  temperament          String
+  medicalHistory       String
+  adoptionRequirements String
+  adoptionRequest      AdoptionRequest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("pet")
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
