@@ -8,4 +8,8 @@ router.get("/:id", PatientControllers.getIdFromDB);
 
 router.patch("/:id", PatientControllers.updateIntoDB);
 
+router.delete("/:id", PatientControllers.permanentDelete);
+
+router.delete("/soft/:id", PatientControllers.softDelete);
+
 export const PatientRoutes = router;

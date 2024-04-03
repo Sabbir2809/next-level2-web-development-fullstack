@@ -1,5 +1,5 @@
 import { Doctor, Prisma, UserStatus } from "@prisma/client";
-import { TPaginationOptions } from "../../types/pagination.type";
+import { TPaginationOptions } from "../../types/pagination";
 import calculatePagination from "../../utils/pagination";
 import prisma from "../../utils/prisma";
 import { doctorSearchAbleFields } from "./doctor.constant";

@@ -3,7 +3,7 @@ import fs from "fs";
 import multer from "multer";
 import path from "path";
 import config from "../config";
-import { TFile } from "../types/cloudinary.type";
+import { TFile } from "../types/cloudinary";
 
 cloudinary.config({
   cloud_name: config.cloudinary.cloudinary_cloud_name,

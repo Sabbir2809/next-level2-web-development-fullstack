@@ -2,8 +2,8 @@ import { Admin, Doctor, Patient, Prisma, UserRole, UserStatus } from "@prisma/cl
 import bcrypt from "bcrypt";
 import { Request } from "express";
 import { JwtPayload } from "jsonwebtoken";
-import { TFile } from "../../types/cloudinary.type";
-import { TPaginationOptions } from "../../types/pagination.type";
+import { TFile } from "../../types/cloudinary";
+import { TPaginationOptions } from "../../types/pagination";
 import { fileUploader } from "../../utils/fileUploader";
 import calculatePagination from "../../utils/pagination";
 import prisma from "../../utils/prisma";
