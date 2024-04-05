@@ -4,3 +4,8 @@ export interface ISchedule {
   startTime: string;
   endTime: string;
 }
+
+export interface IFilterRequest {
+  startDate?: string | undefined;
+  endDate?: string | undefined;
+}
