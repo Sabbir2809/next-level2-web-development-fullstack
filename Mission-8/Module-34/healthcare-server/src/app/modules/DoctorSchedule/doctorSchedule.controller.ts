@@ -18,13 +18,11 @@ const createDoctorSchedule = catchAsync(async (req, res) => {
   });
 });
 
-const getDoctorSchedules = catchAsync(async (req, res) => {
+const getMySchedules = catchAsync(async (req, res) => {
   const filters = pick(req.query, ["startDate", "endDate", "isBooked"]);
   const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
 
-  const user = (req as JwtPayload).user;
-
-  const result = await DoctorScheduleServices.getDoctorSchedulesFormDB(filters, options, user);
+  const result = await DoctorScheduleServices.getMySchedulesFormDB(filters, options);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -34,7 +32,36 @@ const getDoctorSchedules = catchAsync(async (req, res) => {
   });
 });
 
+const deleteMySchedule = catchAsync(async (req, res) => {
+  const user = (req as JwtPayload).user;
+  const scheduleId = req.params.scheduleId;
+  const result = await DoctorScheduleServices.deleteMyScheduleIntoDB(scheduleId, user);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Doctor Schedules Deleted Successfully",
+    data: result,
+  });
+});
+
+const getAllDoctorSchedules = catchAsync(async (req, res) => {
+  const filters = pick(req.query, ["startDate", "endDate", "isBooked"]);
+  const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+
+  const result = await DoctorScheduleServices.getAllDoctorSchedulesFormDB(filters, options);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Get All Doctor Schedules Fetched Successfully",
+    data: result,
+  });
+});
+
 export const DoctorScheduleControllers = {
   createDoctorSchedule,
-  getDoctorSchedules,
+  getMySchedules,
+  deleteMySchedule,
+  getAllDoctorSchedules,
 };

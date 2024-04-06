@@ -4,12 +4,16 @@ import checkAuth from "../../middlewares/checkAuth";
 import { DoctorScheduleControllers } from "./doctorSchedule.controller";
 const router = Router();
 
-router.get(
-  "/my-schedule",
-  checkAuth(UserRole.DOCTOR),
-  DoctorScheduleControllers.getDoctorSchedules
-);
+router.get("/", checkAuth(UserRole.DOCTOR), DoctorScheduleControllers.getAllDoctorSchedules);
+
+router.get("/my-schedule", checkAuth(UserRole.DOCTOR), DoctorScheduleControllers.getMySchedules);
 
 router.post("/", checkAuth(UserRole.DOCTOR), DoctorScheduleControllers.createDoctorSchedule);
+
+router.delete(
+  "/:scheduleId",
+  checkAuth(UserRole.DOCTOR),
+  DoctorScheduleControllers.deleteMySchedule
+);
 
 export const DoctorScheduleRoutes = router;
