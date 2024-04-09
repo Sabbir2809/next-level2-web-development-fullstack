@@ -79,3 +79,7 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module-33: Construction of Healthcare Server Part-7
 
 ### Module-34: Construction of Healthcare Server Part-8
+
+### Module-35: Construction of Healthcare Server Part-9
+
+### Module-36: Construction of Healthcare Server Part-10
