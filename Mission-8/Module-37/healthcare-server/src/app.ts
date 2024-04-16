@@ -16,11 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(cookieParser());
 
+// payment cancel cron job
 cron.schedule("* * * * *", async () => {
   try {
     AppointmentServices.cancelUnpaidAppointments();
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 });
 

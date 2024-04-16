@@ -282,7 +282,7 @@ const cancelUnpaidAppointments = async () => {
     });
 
     for (const unPaidAppointment of unPaidAppointments) {
-      tsc.doctorSchedules.updateMany({
+      await tsc.doctorSchedules.updateMany({
         where: {
           doctorId: unPaidAppointment.doctorId,
           scheduleId: unPaidAppointment.scheduleId,
@@ -293,8 +293,6 @@ const cancelUnpaidAppointments = async () => {
       });
     }
   });
-
-  console.log("Updated");
 };
 
 export const AppointmentServices = {
