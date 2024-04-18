@@ -87,3 +87,9 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module-37: Construction of Healthcare Server Part-11
 
 ### Module-38: Construction of Healthcare Server Part-12
+
+---
+
+## Mission-9: Be a Next.Js Ninja
+
+### Module-39: Fundamentals of Next.Js
