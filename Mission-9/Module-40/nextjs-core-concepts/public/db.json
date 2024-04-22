@@ -1,0 +1,40 @@
+{
+  "shoes": [
+    {
+      "title": "Men's Running Shoes",
+      "description": "Comfortable running shoes for men, designed for both casual and athletic wear.",
+      "price": 88,
+      "id": "SH1001"
+    },
+    {
+      "title": "Women's Trail Hiking Boots",
+      "description": "Durable hiking boots for women, perfect for outdoor adventures on rough terrain.",
+      "price": 109,
+      "id": "SH1002"
+    },
+    {
+      "title": "Unisex Sneakers",
+      "description": "Stylish and versatile sneakers suitable for both men and women.",
+      "price": 64.99,
+      "id": "SH1003"
+    },
+    {
+      "title": "Kid's Light-Up Shoes",
+      "description": "Fun light-up shoes for kids with colorful designs, perfect for active play.",
+      "price": 39.99,
+      "id": "SH1004"
+    },
+    {
+      "title": "Men's Leather Dress Shoes",
+      "description": "Classic leather dress shoes for men, suitable for formal occasions.",
+      "price": 129.99,
+      "id": "SH1005"
+    },
+    {
+      "title": "Women's Ballet Flats",
+      "description": "Comfortable and elegant ballet flats for women, ideal for everyday wear.",
+      "price": 49.99,
+      "id": "SH1006"
+    }
+  ]
+}

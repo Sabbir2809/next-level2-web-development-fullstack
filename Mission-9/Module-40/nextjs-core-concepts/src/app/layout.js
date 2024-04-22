@@ -1,17 +1,25 @@
-import { Inter } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
   title: "Next.Js Core Concepts",
-  description: "core fundamental core concepts",
+  description: "core fundamental concepts",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="dark">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" data-theme="light">
+      <body className={roboto.className}>
+        <Navbar></Navbar>
+        {children}
+      </body>
     </html>
   );
 }
