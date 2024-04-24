@@ -1,5 +1,4 @@
 "use client";
-
 const ErrorPage = ({ error, reset }) => {
   return (
     <div>
