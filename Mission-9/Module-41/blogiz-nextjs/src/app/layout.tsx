@@ -1,5 +1,6 @@
 import Footer from "@/components/shared/Footer";
 import Header from "@/components/shared/Header";
+import Providers from "@/lib/Providers";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -18,12 +19,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
-      <body className={inter.className}>
-        <Header></Header>
-        {children}
-        <Footer></Footer>
-      </body>
-    </html>
+    <Providers>
+      <html lang="en" data-theme="light">
+        <body className={inter.className}>
+          <Header></Header>
+          {children}
+          <Footer></Footer>
+        </body>
+      </html>
+    </Providers>
   );
 }

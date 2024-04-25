@@ -53,6 +53,15 @@
       "author_name": "Mehedi Imun Anik",
       "blog_image": "https://startnearshoring.com/wp-content/uploads/2023/07/The_Growing_Importance_of_Cybersecurity.jpg",
       "total_likes": "950"
+    },
+    {
+      "id": "7",
+      "title": "Full Stack Web Development",
+      "description": "Full Stack Web Development",
+      "publish_date": "2024-04-25",
+      "author_name": "Sabbir Hossain",
+      "blog_image": "https://www.softsuave.com/blog/wp-content/uploads/2023/01/fullstack-development.png",
+      "total_likes": "100"
     }
   ]
 }
