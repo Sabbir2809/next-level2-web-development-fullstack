@@ -6,6 +6,8 @@ and administrators. The system incorporates cutting-edge technologies such as
 NodeJS, Express, Prisma, WEB RTC (via Agora.io), and PostgreSQL for efficient and
 secure data management.
 
+### Postman API Documentation: https://documenter.getpostman.com/view/15226030/2sA3BuV8LF
+
 ## Technologies
 
 1. NodeJS and Express: Used for server-side application development.
@@ -78,6 +80,6 @@ secure data management.
 1. Automated email notifications for appointment confirmations, invoices, and prescription delivery.
 1. Doctors can generate detailed prescriptions during and after consultations.
 
-## ERD
+## Entity Relationship Diagram
 
 ![ERD](./ERD.png)

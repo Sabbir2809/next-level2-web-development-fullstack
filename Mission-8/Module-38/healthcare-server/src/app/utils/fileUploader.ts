@@ -12,16 +12,17 @@ cloudinary.config({
 });
 
 // Cloudinary setup
-const uploadToCloudinary = async (file: TFile): Promise<UploadApiResponse> => {
-  try {
-    // Upload file to Cloudinary
-    const result = await cloudinary.uploader.upload(file.path, { public_id: file.originalname });
-    // Delete file from local system
-    await fs.unlinkSync(file.path);
-    return result;
-  } catch (error) {
-    throw error;
-  }
+const uploadToCloudinary = (file: TFile): Promise<UploadApiResponse | undefined> => {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.upload(file.path, { public_id: file.originalname }, (error, result) => {
+      fs.unlinkSync(file.path);
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 };
 
 // Multer setup
