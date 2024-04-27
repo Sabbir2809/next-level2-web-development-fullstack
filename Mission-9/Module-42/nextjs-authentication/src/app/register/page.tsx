@@ -1,11 +1,13 @@
 "use client";
 
+import { registerUser } from "@/utils/actions/registerUser";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import signupSVG from "./../../../public/signup.svg";
 
-export type UserData = {
+export type TUserData = {
   username: string;
   email: string;
   password: string;
@@ -16,12 +18,17 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserData>();
+  } = useForm<TUserData>();
 
-  const onSubmit = async (data: UserData) => {
-    console.log(data);
+  const router = useRouter();
 
+  const onSubmit = async (data: TUserData) => {
     try {
+      const res = await registerUser(data);
+      if (res.success) {
+        alert(res.message);
+        router.push("/login");
+      }
     } catch (err: any) {
       console.error(err.message);
       throw new Error(err.message);
@@ -44,7 +51,7 @@ const RegisterPage = () => {
           />
         </div>
 
-        <div className="card w-[70%] h-[70%] shadow-xl bg-base-100">
+        <div className="card w-[70%] shadow-xl bg-base-100">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body py-3">
             <div className="form-control">
               <label className="label">

@@ -1,10 +1,14 @@
 "use client";
+
+import { loginUser } from "@/utils/actions/loginUser";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import loginSVG from "./../../../public/login.svg";
 
-type FormValues = {
+export type TFormValues = {
   email: string;
   password: string;
 };
@@ -14,10 +18,23 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<TFormValues>();
 
-  const onSubmit = async (data: FormValues) => {
-    console.log(data);
+  const router = useRouter();
+
+  const onSubmit = async (data: TFormValues) => {
+    try {
+      const res = await loginUser(data);
+      console.log(res);
+
+      if (res.accessToken) {
+        localStorage.setItem("accessToken", res.accessToken);
+        router.push("/");
+      }
+    } catch (err: any) {
+      console.error(err.message);
+      throw new Error(err.message);
+    }
   };
 
   return (
@@ -36,7 +53,7 @@ const LoginPage = () => {
           />
         </div>
 
-        <div className="card w-[70%] h-[70%] shadow-xl bg-base-100">
+        <div className="card w-[70%] h-[90%] shadow-xl bg-base-100">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <div className="form-control mt-5">
               <label className="label">
@@ -69,13 +86,13 @@ const LoginPage = () => {
                 Login
               </button>
             </div>
-            <p className="text-center">
-              Don&apos;t have an account?{" "}
-              <Link className="text-accent" href="/register">
-                Create an account
-              </Link>
-            </p>
           </form>
+          <p className="text-center">
+            Don&apos;t have an account?{" "}
+            <Link className="text-accent" href="/register">
+              Create an account
+            </Link>
+          </p>
           <p className="text-center">Or Sign Up Using</p>
           <div className="flex justify-center mb-10 mt-2">
             <button className="btn btn-circle">
@@ -84,9 +101,20 @@ const LoginPage = () => {
                 width={50}
                 height={50}
                 alt="google logo"
+                onClick={() =>
+                  signIn("google", {
+                    callbackUrl: "https://nextjs-authentication-gold.vercel.app/dashboard",
+                  })
+                }
               />
             </button>
-            <button className="btn btn-circle">
+            <button
+              className="btn btn-circle"
+              onClick={() =>
+                signIn("github", {
+                  callbackUrl: "https://nextjs-authentication-gold.vercel.app/dashboard",
+                })
+              }>
               <Image
                 src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
                 width={35}
