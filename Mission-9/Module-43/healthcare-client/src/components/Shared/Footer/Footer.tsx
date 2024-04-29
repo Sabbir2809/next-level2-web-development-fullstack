@@ -1,4 +1,7 @@
 import facebookIcon from "@/assets/landing_page/facebook.png";
+import instagramIcon from "@/assets/landing_page/instagram.png";
+import linkedinIcon from "@/assets/landing_page/linkedin.png";
+import twitterIcon from "@/assets/landing_page/twitter.png";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,13 +33,13 @@ const Footer = () => {
             <Image src={facebookIcon} alt="Facebook" width={30} height={30} />
           </Link>
           <Link href="/">
-            <Image src={facebookIcon} alt="Facebook" width={30} height={30} />
+            <Image src={linkedinIcon} alt="Facebook" width={30} height={30} />
           </Link>
           <Link href="/">
-            <Image src={facebookIcon} alt="Facebook" width={30} height={30} />
+            <Image src={instagramIcon} alt="Facebook" width={30} height={30} />
           </Link>
           <Link href="/">
-            <Image src={facebookIcon} alt="Facebook" width={30} height={30} />
+            <Image src={twitterIcon} alt="Facebook" width={30} height={30} />
           </Link>
         </Stack>
 
