@@ -27,7 +27,7 @@ router.post(
 
 router.post(
   "/create-doctor",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN),
+  // checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = UserValidationSchemes.createDoctor.parse(JSON.parse(req.body.data));

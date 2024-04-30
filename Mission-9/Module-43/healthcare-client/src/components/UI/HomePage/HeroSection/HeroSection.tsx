@@ -13,7 +13,7 @@ const HeroSection = () => {
       sx={{
         display: "flex",
         direction: "row",
-        my: 16,
+        my: 20,
       }}>
       {/* Left side */}
       <Box

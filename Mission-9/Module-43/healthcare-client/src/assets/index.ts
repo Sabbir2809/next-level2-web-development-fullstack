@@ -9,7 +9,7 @@ const assets = {
     doctor1: require("./images/doctor1.png"),
     doctor2: require("./images/doctor2.png"),
     doctor3: require("./images/doctor3.png"),
-    stethoscope: require("./images/Stetoscope.png"),
+    stethoscope: require("./images/stethoscope.png"),
     familyOnBeach: require("./images/familyOnBeach.png"),
   },
   svgs: {
@@ -33,6 +33,9 @@ const assets = {
     dentist: require("./svgs/Dentist.svg"),
     ophthalmology: require("./svgs/Ophthalmology.svg"),
     award: require("./svgs/award-icon.svg"),
+    care: require("./svgs/care-icon.svg"),
+    equipment: require("./svgs/medical-equipment-icon.svg"),
+    call: require("./svgs/call-icon.svg"),
   },
 };
 

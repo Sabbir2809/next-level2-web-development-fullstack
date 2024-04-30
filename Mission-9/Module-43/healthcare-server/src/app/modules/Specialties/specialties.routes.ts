@@ -6,11 +6,7 @@ import { SpecialtiesControllers } from "./specialties.controller";
 import { SpecialtiesValidations } from "./specialties.validation";
 const router = Router();
 
-router.get(
-  "/",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
-  SpecialtiesControllers.getAllSpecialties
-);
+router.get("/", SpecialtiesControllers.getAllSpecialties);
 
 router.post(
   "/",
