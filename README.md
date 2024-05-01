@@ -93,3 +93,13 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ## Mission-9: Be a Next.Js Ninja
 
 ### Module-39: Fundamentals of Next.Js
+
+### Module-40: Next.Js Core Concepts Part-1
+
+### Module-41: Next.Js Core Concepts Part-2
+
+### Module-42: Next.Js Authentication System
+
+### Module-43: Building a Next.Js Project Part-1
+
+### Module-44: Building a Next.Js Project Part-2
