@@ -1,8 +1,45 @@
+"use client";
 import logo from "@/assets/icons/charity-icon.png";
+import { loginPatient } from "@/services/actions/loginPatient";
+import { storeUserInfo } from "@/services/auth.services";
 import { Box, Button, Container, Grid, Link, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+// Interface
+export type TFormData = {
+  email: string;
+  password: string;
+};
 
 const LoginPage = () => {
+  // useRouter hook
+  const router = useRouter();
+
+  // useForm hook
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<TFormData>();
+
+  // on submit handler
+  const onSubmit: SubmitHandler<TFormData> = async (values) => {
+    try {
+      const res = await loginPatient(values);
+      if (res?.data?.accessToken) {
+        storeUserInfo({ accessToken: res?.data?.accessToken });
+        toast.success(res?.message);
+        router.push("/");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <Container>
       <Stack
@@ -35,7 +72,7 @@ const LoginPage = () => {
             </Box>
           </Stack>
           <Box>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={6}>
                   <TextField
@@ -45,6 +82,7 @@ const LoginPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("email", { required: true })}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -55,9 +93,12 @@ const LoginPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("password", { required: true })}
                   />
                 </Grid>
               </Grid>
+
+              {/* Forget Password Page */}
               <Typography component="p" fontWeight={300} textAlign="end" marginBottom="1">
                 <Link href="/forget-password" className="text-blue-500">
                   Forget Password?
@@ -65,12 +106,15 @@ const LoginPage = () => {
               </Typography>
 
               <Button
+                type="submit"
                 fullWidth={true}
                 sx={{
                   margin: "10px 0px",
                 }}>
                 Login
               </Button>
+
+              {/* Register page */}
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?{" "}
                 <Link href="/register" className="text-blue-500">

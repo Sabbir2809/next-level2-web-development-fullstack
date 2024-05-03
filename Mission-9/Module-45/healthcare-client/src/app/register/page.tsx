@@ -1,9 +1,51 @@
+"use client";
 import logo from "@/assets/icons/charity-icon.png";
+import { registerPatient } from "@/services/actions/registerPatient";
+import { modifyPayload } from "@/utils/modifyPayload";
 import { Box, Button, Container, Grid, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+// Interface
+interface IPatientRegisterFromData {
+  password: string;
+  patient: {
+    name: string;
+    email: string;
+    contactNumber: string;
+    address: string;
+  };
+}
 
 const RegisterPage = () => {
+  // useRouter hook
+  const router = useRouter();
+  // useForm hook
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IPatientRegisterFromData>();
+
+  // on submit handler
+  const onSubmit: SubmitHandler<IPatientRegisterFromData> = async (values) => {
+    const data = modifyPayload(values);
+
+    try {
+      const res = await registerPatient(data);
+      if (res?.data?.id) {
+        toast.success(res?.message);
+        router.push("/login");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <Container>
       <Stack
@@ -21,7 +63,7 @@ const RegisterPage = () => {
             padding: 4,
             textAlign: "center",
           }}>
-          {/* Image */}
+          {/* Logo and Title*/}
           <Stack
             sx={{
               justifyContent: "center",
@@ -36,9 +78,10 @@ const RegisterPage = () => {
               </Typography>
             </Box>
           </Stack>
-          {/* Input */}
+
+          {/* Registration Info */}
           <Box>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={2} my={1}>
                 <Grid item md={12}>
                   <TextField
@@ -48,6 +91,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("patient.name", { required: true })}
                   />
                 </Grid>
 
@@ -59,6 +103,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("patient.email", { required: true })}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -69,6 +114,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("password", { required: true })}
                   />
                 </Grid>
 
@@ -80,6 +126,7 @@ const RegisterPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("patient.contactNumber", { required: true })}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -90,16 +137,19 @@ const RegisterPage = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
+                    {...register("patient.address", { required: true })}
                   />
                 </Grid>
               </Grid>
               <Button
+                type="submit"
                 fullWidth={true}
                 sx={{
                   margin: "10px 0px",
                 }}>
                 Register
               </Button>
+              {/* Switch Login Page */}
               <Typography component="p" fontWeight={300}>
                 Do you already have an account?{" "}
                 <Link href="/login" className="text-blue-500">

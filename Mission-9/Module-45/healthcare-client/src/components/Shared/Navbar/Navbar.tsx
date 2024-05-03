@@ -1,7 +1,17 @@
+"use client";
+import { getUserInfo, removeUser } from "@/services/auth.services";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
+type TUserInfo = {
+  email: string;
+  role: string;
+  userId: string;
+};
+
 const Navbar = () => {
+  const userInfo = getUserInfo() as TUserInfo;
+
   return (
     <Container>
       <Stack direction="row" justifyContent="space-between" alignItems="center" py={2}>
@@ -35,9 +45,15 @@ const Navbar = () => {
             NGOs
           </Typography>
         </Stack>
-        <Button component={Link} href="/login">
-          Login
-        </Button>
+        {userInfo?.userId ? (
+          <Button component={Link} href="/login" color="warning" onClick={() => removeUser()}>
+            Logout
+          </Button>
+        ) : (
+          <Button component={Link} href="/login">
+            Login
+          </Button>
+        )}
       </Stack>
     </Container>
   );
