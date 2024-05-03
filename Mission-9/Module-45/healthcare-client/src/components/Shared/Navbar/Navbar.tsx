@@ -1,16 +1,10 @@
 "use client";
-import { getUserInfo, removeUser } from "@/services/auth.services";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 
-type TUserInfo = {
-  email: string;
-  role: string;
-  userId: string;
-};
-
 const Navbar = () => {
-  const userInfo = getUserInfo() as TUserInfo;
+  const AuthButton = dynamic(() => import("@/components/UI/AuthButton/AuthButton"), { ssr: false });
 
   return (
     <Container>
@@ -45,15 +39,8 @@ const Navbar = () => {
             NGOs
           </Typography>
         </Stack>
-        {userInfo?.userId ? (
-          <Button component={Link} href="/login" color="warning" onClick={() => removeUser()}>
-            Logout
-          </Button>
-        ) : (
-          <Button component={Link} href="/login">
-            Login
-          </Button>
-        )}
+        {/* Login and Logout Button */}
+        <AuthButton />
       </Stack>
     </Container>
   );

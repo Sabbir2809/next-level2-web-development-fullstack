@@ -1,6 +1,6 @@
 "use client";
 import logo from "@/assets/icons/charity-icon.png";
-import { loginPatient } from "@/services/actions/loginPatient";
+import { loginUser } from "@/services/actions/loginPatient";
 import { storeUserInfo } from "@/services/auth.services";
 import { Box, Button, Container, Grid, Link, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
@@ -19,17 +19,12 @@ const LoginPage = () => {
   const router = useRouter();
 
   // useForm hook
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<TFormData>();
+  const { register, handleSubmit } = useForm<TFormData>();
 
   // on submit handler
   const onSubmit: SubmitHandler<TFormData> = async (values) => {
     try {
-      const res = await loginPatient(values);
+      const res = await loginUser(values);
       if (res?.data?.accessToken) {
         storeUserInfo({ accessToken: res?.data?.accessToken });
         toast.success(res?.message);

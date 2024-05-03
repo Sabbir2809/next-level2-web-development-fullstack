@@ -1,6 +1,8 @@
 "use client";
 import logo from "@/assets/icons/charity-icon.png";
+import { loginUser } from "@/services/actions/loginPatient";
 import { registerPatient } from "@/services/actions/registerPatient";
+import { storeUserInfo } from "@/services/auth.services";
 import { modifyPayload } from "@/utils/modifyPayload";
 import { Box, Button, Container, Grid, Stack, TextField, Typography } from "@mui/material";
 import Image from "next/image";
@@ -24,12 +26,7 @@ const RegisterPage = () => {
   // useRouter hook
   const router = useRouter();
   // useForm hook
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<IPatientRegisterFromData>();
+  const { register, handleSubmit } = useForm<IPatientRegisterFromData>();
 
   // on submit handler
   const onSubmit: SubmitHandler<IPatientRegisterFromData> = async (values) => {
@@ -39,7 +36,14 @@ const RegisterPage = () => {
       const res = await registerPatient(data);
       if (res?.data?.id) {
         toast.success(res?.message);
-        router.push("/login");
+        const user = await loginUser({
+          email: values.patient.email,
+          password: values.password,
+        });
+        if (user?.data?.accessToken) {
+          storeUserInfo({ accessToken: user?.data?.accessToken });
+          router.push("/");
+        }
       }
     } catch (error: any) {
       toast.error(error.message);
