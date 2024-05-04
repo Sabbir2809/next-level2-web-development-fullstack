@@ -1,4 +1,3 @@
-"use client";
 import chooseUs from "@/assets/choose-us.png";
 import award from "@/assets/svgs/award-icon.svg";
 import call from "@/assets/svgs/call-icon.svg";

@@ -1,3 +1,4 @@
+"use client";
 import { Box, Container, Grid, Typography } from "@mui/material";
 
 const Stats = () => {

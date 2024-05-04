@@ -143,7 +143,7 @@ const RegisterPage = () => {
               {/* Switch Login Page */}
               <Typography component="p" fontWeight={300}>
                 Do you already have an account?{" "}
-                <Link href="/login" className="text-blue-500">
+                <Link href="/login" style={{ color: "#1576FD" }}>
                   Login
                 </Link>
               </Typography>

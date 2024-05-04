@@ -118,7 +118,7 @@ const LoginPage = () => {
               {/* Register page */}
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?{" "}
-                <Link href="/register" className="text-blue-500">
+                <Link href="/register" style={{ color: "#1576FD" }}>
                   Register
                 </Link>
               </Typography>
