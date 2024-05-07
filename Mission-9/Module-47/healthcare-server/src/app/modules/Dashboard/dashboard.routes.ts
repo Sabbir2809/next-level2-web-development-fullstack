@@ -6,7 +6,7 @@ const router = Router();
 
 router.get(
   "/",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   DashboardControllers.dashboardMetadata
 );
 

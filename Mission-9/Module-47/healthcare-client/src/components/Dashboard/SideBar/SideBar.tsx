@@ -11,6 +11,7 @@ import SidebarItem from "./SidebarItem";
 
 const SideBar = () => {
   const [userRole, setUserRole] = useState("");
+
   useEffect(() => {
     const { role } = getUserInfo();
     setUserRole(role);

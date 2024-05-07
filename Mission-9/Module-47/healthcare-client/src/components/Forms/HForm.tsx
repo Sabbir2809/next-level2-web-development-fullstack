@@ -22,7 +22,7 @@ const HForm = ({ children, onSubmit, resolver }: TFormProps) => {
 
   // submit handler
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
     onSubmit(data);
     reset();
   };

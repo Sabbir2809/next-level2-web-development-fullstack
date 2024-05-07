@@ -9,7 +9,7 @@ const router = Router();
 
 router.get(
   "/",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   AppointmentControllers.getMyAppointment
 );
 
@@ -28,7 +28,7 @@ router.post(
 
 router.patch(
   "/status/:id",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   AppointmentControllers.changeAppointmentStatus
 );
 

@@ -10,26 +10,26 @@ router.get("/", DoctorControllers.getAllFromDB);
 
 router.get(
   "/:id",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   DoctorControllers.getIdFromDB
 );
 
 router.patch(
   "/:id",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   validationRequest(DoctorValidations.update),
   DoctorControllers.updateIntoDB
 );
 
 router.delete(
   "/:id",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   DoctorControllers.permanentDeleteFromDB
 );
 
 router.delete(
   "/soft/:id",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   DoctorControllers.softDeleteFromDB
 );
 

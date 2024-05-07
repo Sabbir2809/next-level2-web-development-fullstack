@@ -13,7 +13,7 @@ const drawerMenuItem = (role: UserRole): IDrawerMenuItem[] => {
   const roleMenuItems: IDrawerMenuItem[] = [];
 
   switch (role) {
-    // super-admin
+    // super_admin
     case USER_ROLE.SUER_ADMIN:
       roleMenuItems.push(
         {

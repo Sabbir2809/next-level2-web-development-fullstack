@@ -9,6 +9,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import SideBar from "../SideBar/SideBar";
+import { getUserInfo } from "@/services/auth.services";
 
 const MenuDrawer = ({ children }: { children: React.ReactNode }) => {
   const drawerWidth = 240;
@@ -29,6 +30,8 @@ const MenuDrawer = ({ children }: { children: React.ReactNode }) => {
       setMobileOpen(!mobileOpen);
     }
   };
+
+  const userInfo = getUserInfo();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -55,7 +58,7 @@ const MenuDrawer = ({ children }: { children: React.ReactNode }) => {
           </IconButton>
           <Box>
             <Typography variant="body2" noWrap component="div" color="gray">
-              Hi, Sabbir Hossain
+              Hi, {userInfo?.email}
             </Typography>
             <Typography variant="body2" noWrap component="div" color="primary.main">
               Welcome To, Healthcare

@@ -10,7 +10,7 @@ router.get("/", SpecialtiesControllers.getAllSpecialties);
 
 router.post(
   "/",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = SpecialtiesValidations.create.parse(JSON.parse(req.body.data));
@@ -20,7 +20,7 @@ router.post(
 
 router.delete(
   "/:id",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   SpecialtiesControllers.deleteSpecialty
 );
 

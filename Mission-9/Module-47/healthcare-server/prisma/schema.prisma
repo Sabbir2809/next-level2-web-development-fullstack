@@ -273,7 +273,7 @@ model Review {
 
 // ::::: Enum Type :::::
 enum UserRole {
-  SUER_ADMIN
+  SUPER_ADMIN
   ADMIN
   DOCTOR
   PATIENT

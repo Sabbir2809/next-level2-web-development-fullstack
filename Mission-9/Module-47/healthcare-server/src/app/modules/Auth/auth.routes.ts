@@ -11,14 +11,14 @@ router.post("/login", validationRequest(AuthValidations.login), AuthControllers.
 router.post(
   "/refresh-token",
   validationRequest(AuthValidations.refreshToken),
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   AuthControllers.refreshToken
 );
 
 router.post(
   "/change-password",
   validationRequest(AuthValidations.changePassword),
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   AuthControllers.changePassword
 );
 
