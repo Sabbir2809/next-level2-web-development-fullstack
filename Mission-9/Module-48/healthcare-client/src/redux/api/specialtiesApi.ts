@@ -1,3 +1,4 @@
+import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
 const specialtiesApi = baseApi.injectEndpoints({
@@ -10,6 +11,7 @@ const specialtiesApi = baseApi.injectEndpoints({
         contentType: "multipart/form-data",
         data: data,
       }),
+      invalidatesTags: [tagTypes.specialties],
     }),
 
     // get all specialties
@@ -18,8 +20,19 @@ const specialtiesApi = baseApi.injectEndpoints({
         url: "/specialties",
         method: "GET",
       }),
+      providesTags: [tagTypes.specialties],
+    }),
+
+    // delete specialty
+    deleteSpecialty: build.mutation({
+      query: (id) => ({
+        url: `/specialties/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.specialties],
     }),
   }),
 });
 
-export const { useCreateSpecialtyMutation, useGetAllSpecialtiesQuery } = specialtiesApi;
+export const { useCreateSpecialtyMutation, useGetAllSpecialtiesQuery, useDeleteSpecialtyMutation } =
+  specialtiesApi;

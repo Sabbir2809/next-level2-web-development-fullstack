@@ -1,14 +1,61 @@
 "use client";
-import { Box, Button, Stack, TextField } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import SpecialtyModal from "./components/SpecialtyModal";
-import { useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
+import { useDeleteSpecialtyMutation, useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import Image from "next/image";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { toast } from "sonner";
 
 const SpecialtiesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const data = useGetAllSpecialtiesQuery({});
-  console.log(data);
+  const { data, isLoading } = useGetAllSpecialtiesQuery({});
+  const [deleteSpecialty] = useDeleteSpecialtyMutation();
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteSpecialty(id).unwrap();
+      if (res?.id) {
+        toast.success("Deleted Successfully!");
+      }
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
+  };
+
+  const columns: GridColDef[] = [
+    { field: "title", headerName: "Title", width: 400 },
+    {
+      field: "icon",
+      headerName: "Icon",
+      flex: 1,
+      renderCell: ({ row }) => {
+        return (
+          <Box justifyContent="center">
+            <Image src={row.icon} alt={row.title} width={30} height={30} />
+          </Box>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: ({ row }) => {
+        return (
+          <Box justifyContent="center">
+            <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        );
+      },
+    },
+  ];
 
   return (
     <Box>
@@ -17,9 +64,15 @@ const SpecialtiesPage = () => {
         <SpecialtyModal open={isModalOpen} setOpen={setIsModalOpen} />
         <TextField placeholder="Search Specialist" size="small" />
       </Stack>
-      <Box>
-        <h1>Display Specialties</h1>
-      </Box>
+      {!isLoading ? (
+        <Box my={2}>
+          <DataGrid rows={data} columns={columns} />
+        </Box>
+      ) : (
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <CircularProgress disableShrink />;
+        </Box>
+      )}
     </Box>
   );
 };
