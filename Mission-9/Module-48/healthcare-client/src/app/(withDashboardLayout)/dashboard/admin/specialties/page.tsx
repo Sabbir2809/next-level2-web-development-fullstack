@@ -1,12 +1,12 @@
 "use client";
-import { Box, Button, CircularProgress, IconButton, Stack, TextField } from "@mui/material";
-import { useState } from "react";
-import SpecialtyModal from "./components/SpecialtyModal";
 import { useDeleteSpecialtyMutation, useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Button, CircularProgress, IconButton, Stack, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
 import { toast } from "sonner";
+import SpecialtyModal from "./components/SpecialtyModal";
 
 const SpecialtiesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const SpecialtiesPage = () => {
         return (
           <Box justifyContent="center">
             <IconButton aria-label="delete" onClick={() => handleDelete(row.id)}>
-              <DeleteIcon />
+              <DeleteIcon sx={{ color: "red" }} />
             </IconButton>
           </Box>
         );
@@ -66,7 +66,7 @@ const SpecialtiesPage = () => {
       </Stack>
       {!isLoading ? (
         <Box my={2}>
-          <DataGrid rows={data} columns={columns} />
+          <DataGrid rows={data} columns={columns} hideFooter={true} />
         </Box>
       ) : (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

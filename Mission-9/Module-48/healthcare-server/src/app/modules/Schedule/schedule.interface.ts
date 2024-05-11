@@ -1,6 +1,6 @@
 export interface ISchedule {
-  startDate: string;
-  endDate: string;
+  startDateTime: string;
+  endDateTime: string;
   startTime: string;
   endTime: string;
 }

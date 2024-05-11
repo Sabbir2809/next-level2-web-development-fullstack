@@ -12,12 +12,12 @@ const convertDateTime = async (date: Date) => {
 };
 
 const createScheduleIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
-  const { startDate, endDate, startTime, endTime } = payload;
+  const { startDateTime, endDateTime, startTime, endTime } = payload;
   const intervalTime = 30;
   const schedules = [];
 
-  const currentDate = new Date(startDate); // start date
-  const lastDate = new Date(endDate); // end date
+  const currentDate = new Date(startDateTime); // start date
+  const lastDate = new Date(endDateTime); // end date
 
   while (currentDate <= lastDate) {
     // 09:30 -> ['09','30']
