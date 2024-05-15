@@ -34,13 +34,10 @@ const HFullScreenModal = ({ open = false, setOpen, title = "", children, sx }: T
     <BootstrapDialog
       fullScreen
       onClose={handleClose}
-      aria-labelledby="customized-dialog-title"
       open={open}
       sx={{ ...sx }}
       TransitionComponent={Transition}>
-      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        {title}
-      </DialogTitle>
+      <DialogTitle sx={{ color: "primary.main", background: "#f4f7fe" }}>{title}</DialogTitle>
       <IconButton
         aria-label="close"
         onClick={handleClose}

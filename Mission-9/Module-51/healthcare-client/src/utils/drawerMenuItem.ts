@@ -2,7 +2,9 @@ import { USER_ROLE } from "@/constants/role";
 import { IDrawerMenuItem, UserRole } from "@/types";
 
 // icons
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
@@ -11,6 +13,14 @@ import TryIcon from "@mui/icons-material/Try";
 
 const drawerMenuItem = (role: UserRole): IDrawerMenuItem[] => {
   const roleMenuItems: IDrawerMenuItem[] = [];
+
+  const defaultMenus = [
+    {
+      title: "Profile",
+      path: `${role}/profile`,
+      icon: AccountCircleIcon,
+    },
+  ];
 
   switch (role) {
     // super_admin
@@ -55,7 +65,7 @@ const drawerMenuItem = (role: UserRole): IDrawerMenuItem[] => {
         {
           title: "Appointments",
           path: `${role}/appointments`,
-          icon: CalendarMonthIcon,
+          icon: CalendarViewMonthIcon,
         },
         {
           title: "Reviews",
@@ -81,7 +91,7 @@ const drawerMenuItem = (role: UserRole): IDrawerMenuItem[] => {
         {
           title: "Appointments",
           path: `${role}/appointment`,
-          icon: CalendarMonthIcon,
+          icon: CalendarViewMonthIcon,
         }
       );
       break;
@@ -111,7 +121,7 @@ const drawerMenuItem = (role: UserRole): IDrawerMenuItem[] => {
       break;
   }
 
-  return [...roleMenuItems];
+  return [...roleMenuItems, ...defaultMenus];
 };
 
 export default drawerMenuItem;
