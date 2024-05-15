@@ -49,7 +49,9 @@ const Specialist = async () => {
                   cursor: "pointer",
                 },
               }}>
-              <Image src={specialty.icon} alt="Specialty Icon" width={100} height={100} />
+              {specialty.icon ? (
+                <Image src={specialty.icon} alt="Specialty Icon" width={100} height={100} />
+              ) : null}
               <Typography component="p" fontWeight={600} fontSize={18} mt={2}>
                 {specialty.title}
               </Typography>

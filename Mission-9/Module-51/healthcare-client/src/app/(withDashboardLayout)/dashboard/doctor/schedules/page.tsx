@@ -1,12 +1,44 @@
 "use client";
+import { useGetAllDoctorSchedulesQuery } from "@/redux/api/doctorScheduleApi";
+import dateFormatter from "@/utils/dateFormatter";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useState } from "react";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import DoctorScheduleModal from "./components/DoctorScheduleModal";
 
 const DoctorSchedulesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [allSchedule, setAllSchedule] = useState<any>([]);
+
+  const { data, isLoading } = useGetAllDoctorSchedulesQuery({});
+  const schedules = data?.doctorSchedules;
+  console.log(schedules);
+
+  // const [deleteSchedule] = useDeleteScheduleMutation();
+
+  useEffect(() => {
+    const updateData = schedules?.map((schedule: any, index: number) => ({
+      sl: index + 1,
+      id: schedule?.doctorId,
+      startDate: dateFormatter(schedule?.schedule?.startDate),
+      startTime: dayjs(schedule?.startDate).format("hh:mm a"),
+      endTime: dayjs(schedule?.endDate).format("hh:mm a"),
+    }));
+    setAllSchedule(updateData);
+  }, [schedules]);
+
+  // const handleDelete = async (id: string) => {
+  //   try {
+  //     const res = await deleteSchedule(id).unwrap();
+  //     if (res?.id) {
+  //       toast.success("Deleted Successfully!");
+  //     }
+  //   } catch (error: any) {
+  //     toast.error(error?.message);
+  //   }
+  // };
 
   const columns: GridColDef[] = [
     { field: "sl", headerName: "SL" },
@@ -33,12 +65,16 @@ const DoctorSchedulesPage = () => {
     <Box>
       <Button onClick={() => setIsModalOpen(true)}>Create Doctor Schedule</Button>
       <DoctorScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
-      <Box sx={{ mb: 5 }}></Box>
-      <Box>
+      <Box sx={{ mb: 5 }}>All Doctor Schedules</Box>
+      {!isLoading ? (
         <Box my={2}>
-          <DataGrid rows={[]} columns={columns} />
+          <DataGrid rows={allSchedule ?? []} columns={columns} hideFooter={true} />
         </Box>
-      </Box>
+      ) : (
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <CircularProgress disableShrink />;
+        </Box>
+      )}
     </Box>
   );
 };

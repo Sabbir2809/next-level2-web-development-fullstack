@@ -34,7 +34,7 @@ const doctorApi = baseApi.injectEndpoints({
 
     // delete doctor
     softDeleteDoctor: build.mutation({
-      query: (id) => ({
+      query: (id: string) => ({
         url: `/doctor/soft/${id}`,
         method: "DELETE",
       }),

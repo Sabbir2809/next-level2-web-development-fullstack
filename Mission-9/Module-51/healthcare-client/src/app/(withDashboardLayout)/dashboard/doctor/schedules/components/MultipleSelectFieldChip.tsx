@@ -1,3 +1,4 @@
+import getTimeIn12HourFormat from "@/utils/getTimeIn12HourFormat";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import FormControl from "@mui/material/FormControl";
@@ -17,17 +18,6 @@ const MenuProps = {
     },
   },
 };
-
-export function getTimeIn12HourFormat(dateTimeString: string): string {
-  const date: Date = new Date(dateTimeString);
-  const hours: number = date.getHours();
-  const minutes: number = date.getMinutes();
-  const ampm: string = hours >= 12 ? "PM" : "AM";
-  const formattedHours: number = hours % 12 === 0 ? 12 : hours % 12;
-  const formattedMinutes: string = minutes < 10 ? "0" + minutes : minutes.toString();
-  return `${formattedHours}:${formattedMinutes} ${ampm}`;
-}
-
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
     fontWeight:
@@ -37,34 +27,29 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
   };
 }
 
-export default function MultipleSelectFieldChip({
+const MultipleSelectFieldChip = ({
   schedules,
   selectedScheduleIds,
   setSelectedScheduleIds,
-}: any) {
+}: any) => {
   const theme = useTheme();
 
   const handleChange = (event: SelectChangeEvent<typeof selectedScheduleIds>) => {
     const {
       target: { value },
     } = event;
-    setSelectedScheduleIds(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setSelectedScheduleIds(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
     <div>
       <FormControl sx={{ width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+        <InputLabel>Doctor Schedule</InputLabel>
         <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
           multiple
           value={selectedScheduleIds}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+          input={<OutlinedInput label="Doctor Schedule" />}
           renderValue={(selected) => {
             return (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -97,4 +82,6 @@ export default function MultipleSelectFieldChip({
       </FormControl>
     </div>
   );
-}
+};
+
+export default MultipleSelectFieldChip;
