@@ -14,7 +14,6 @@ const DoctorSchedulesPage = () => {
 
   const { data, isLoading } = useGetAllDoctorSchedulesQuery({});
   const schedules = data?.doctorSchedules;
-  console.log(schedules);
 
   // const [deleteSchedule] = useDeleteScheduleMutation();
 
