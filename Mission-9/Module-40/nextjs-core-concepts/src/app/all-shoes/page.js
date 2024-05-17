@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Shoes Page",
+  description: "This is Shoes Page",
+};
+
 const AllShoes = async () => {
   const res = await fetch("http://localhost:5000/shoes", {
     cache: "no-cache", // server-rendered on

@@ -2,6 +2,11 @@ import nextJsFeatures from "./../../../public/featuresOfNextJs.png"; // absolute
 // import nextJsFeatures from "./../../assets/featuresOfNextJs.png"; // relative path
 import Image from "next/image";
 
+export const metadata = {
+  title: "Gallery Page",
+  description: "This is Gallery Page",
+};
+
 const GalleryPage = () => {
   return (
     <div>
