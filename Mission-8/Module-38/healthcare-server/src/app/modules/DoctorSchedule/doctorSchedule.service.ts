@@ -35,14 +35,14 @@ const getMySchedulesFormDB = async (params: any, options: TPaginationOptions) =>
       AND: [
         {
           schedule: {
-            startDateTime: {
+            startDate: {
               gte: startDate,
             },
           },
         },
         {
           schedule: {
-            endDateTime: {
+            endDate: {
               lte: endDate,
             },
           },

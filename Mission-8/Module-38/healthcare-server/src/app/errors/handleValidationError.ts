@@ -1,12 +1,21 @@
-import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+import { Prisma } from "@prisma/client";
+import { IGenericErrorResponse } from "../types/error";
 
-const handleValidationError = (error: PrismaClientValidationError) => {
-  const statusCode = 403;
+const handleValidationError = (
+  error: Prisma.PrismaClientValidationError
+): IGenericErrorResponse => {
+  const errors = [
+    {
+      path: "",
+      message: error.message,
+    },
+  ];
 
   return {
-    statusCode,
+    statusCode: 400,
     message: "Validation Error",
-    error: error.message,
+    errorMessages: errors,
   };
 };
+
 export default handleValidationError;

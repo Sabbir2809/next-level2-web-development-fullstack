@@ -46,15 +46,14 @@ const createScheduleIntoDB = async (payload: ISchedule): Promise<Schedule[]> => 
 
       // UTC
       const scheduleData = {
-        startDateTime: s,
-        endDateTime: e,
+        startDate: s,
+        endDate: e,
       };
 
       // existingSchedule
       const existingSchedule = await prisma.schedule.findFirst({
         where: {
-          startDateTime: scheduleData.startDateTime,
-          endDateTime: scheduleData.endDateTime,
+          ...scheduleData,
         },
       });
 
@@ -79,38 +78,42 @@ const getAllSchedulesFormDB = async (
 ) => {
   const { page, limit, skip } = calculatePagination(options);
   const { startDate, endDate, ...filterData } = params;
-  const andConditions: Prisma.ScheduleWhereInput[] = [];
+  const andConditions = [];
 
+  // Adding date filtering conditions if startDate and endDate are provided
   if (startDate && endDate) {
     andConditions.push({
       AND: [
         {
-          startDateTime: {
-            gte: startDate,
+          startDate: {
+            gte: startDate, // Greater than or equal to startDate
           },
-          endDateTime: {
-            lte: endDate,
+        },
+        {
+          endDate: {
+            lte: endDate, // Less than or equal to endDate
           },
         },
       ],
     });
   }
 
-  // specific field
   if (Object.keys(filterData).length > 0) {
     andConditions.push({
-      AND: Object.keys(filterData).map((key) => ({
-        [key]: {
-          equals: (filterData as any)[key],
-        },
-      })),
+      AND: Object.keys(filterData).map((key) => {
+        return {
+          [key]: {
+            equals: (filterData as any)[key],
+          },
+        };
+      }),
     });
   }
 
   const whereConditions: Prisma.ScheduleWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
-  const doctorSchedules = await prisma.doctorSchedules.findMany({
+  const doctorsSchedules = await prisma.doctorSchedules.findMany({
     where: {
       doctor: {
         email: user.email,
@@ -118,41 +121,38 @@ const getAllSchedulesFormDB = async (
     },
   });
 
-  const doctorScheduleIds = doctorSchedules.map((schedule) => schedule.scheduleId);
+  const doctorScheduleIds = new Set(doctorsSchedules.map((schedule) => schedule.scheduleId));
 
   const result = await prisma.schedule.findMany({
     where: {
       ...whereConditions,
       id: {
-        notIn: doctorScheduleIds,
+        notIn: [...doctorScheduleIds],
       },
     },
     skip,
     take: limit,
     orderBy:
       options.sortBy && options.sortOrder
-        ? {
-            [options.sortBy]: options.sortOrder,
-          }
+        ? { [options.sortBy]: options.sortOrder }
         : {
             createdAt: "desc",
           },
   });
-
   const total = await prisma.schedule.count({
     where: {
       ...whereConditions,
       id: {
-        notIn: doctorScheduleIds,
+        notIn: [...doctorScheduleIds],
       },
     },
   });
 
   return {
     meta: {
+      total,
       page,
       limit,
-      total,
     },
     data: result,
   };

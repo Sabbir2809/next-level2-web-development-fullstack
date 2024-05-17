@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import dotenv from "dotenv";
 import path from "path";
 
@@ -37,9 +38,9 @@ export default {
     ipn_url: process.env.IPN_URL,
   },
   superAdmin: {
-    super_admin_email: process.env.SUPER_ADMIN_EMAIL,
-    super_admin_password: process.env.SUPER_ADMIN_PASSWORD,
-    super_admin_name: process.env.SUPER_ADMIN_NAME,
-    super_admin_contactNumber: process.env.SUPER_ADMIN_NUMBER,
+    super_admin_email: process.env.SUPER_ADMIN_EMAIL as string,
+    super_admin_password: process.env.SUPER_ADMIN_PASSWORD as string,
+    super_admin_name: process.env.SUPER_ADMIN_NAME as string,
+    super_admin_contactNumber: process.env.SUPER_ADMIN_NUMBER as string,
   },
 };

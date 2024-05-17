@@ -239,7 +239,7 @@ const getMyProfileFromDB = async (user: JwtPayload) => {
   });
 
   let profileInfo;
-  if (userData.role === UserRole.SUER_ADMIN) {
+  if (userData.role === UserRole.SUPER_ADMIN) {
     profileInfo = await prisma.admin.findUnique({
       where: {
         email: userData.email,
@@ -286,7 +286,7 @@ const updateMyProfileIntoDB = async (user: JwtPayload, req: Request) => {
   }
 
   let profileUpdateInfo;
-  if (userData.role === UserRole.SUER_ADMIN) {
+  if (userData.role === UserRole.SUPER_ADMIN) {
     profileUpdateInfo = await prisma.admin.update({
       where: {
         email: userData.email,

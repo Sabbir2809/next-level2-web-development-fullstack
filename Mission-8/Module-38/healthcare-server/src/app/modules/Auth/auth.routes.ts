@@ -1,20 +1,24 @@
 import { UserRole } from "@prisma/client";
 import { Router } from "express";
 import checkAuth from "../../middlewares/checkAuth";
+import validationRequest from "../../middlewares/validationRequest";
 import { AuthControllers } from "./auth.controller";
+import { AuthValidations } from "./auth.validation";
 const router = Router();
 
-router.post("/login", AuthControllers.login);
+router.post("/login", validationRequest(AuthValidations.login), AuthControllers.login);
 
 router.post(
   "/refresh-token",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  validationRequest(AuthValidations.refreshToken),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   AuthControllers.refreshToken
 );
 
 router.post(
   "/change-password",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  validationRequest(AuthValidations.changePassword),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   AuthControllers.changePassword
 );
 

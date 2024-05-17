@@ -9,23 +9,25 @@ import { generateToken, verifyToken } from "../../utils/jwt";
 import prisma from "../../utils/prisma";
 
 const login = async (payload: { email: string; password: string }) => {
-  const userData = await prisma.user.findUniqueOrThrow({
+  const isUserExist = await prisma.user.findUniqueOrThrow({
     where: {
       email: payload.email,
       status: UserStatus.ACTIVE,
     },
   });
 
-  const isCorrectPassword: boolean = await bcrypt.compare(payload.password, userData.password);
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not exist");
+  }
 
-  if (!isCorrectPassword) {
-    throw new Error("Password Incorrect!");
+  if (isUserExist.password && !(await bcrypt.compare(payload.password, isUserExist.password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Password is incorrect");
   }
 
   const jwtPayload = {
-    userId: userData.id,
-    email: userData.email,
-    role: userData.role,
+    userId: isUserExist.id,
+    email: isUserExist.email,
+    role: isUserExist.role,
   };
   const accessToken = generateToken(
     jwtPayload,
@@ -41,29 +43,34 @@ const login = async (payload: { email: string; password: string }) => {
   return {
     accessToken,
     refreshToken,
-    needPasswordChange: userData.needPasswordChange,
+    needPasswordChange: isUserExist.needPasswordChange,
   };
 };
 
 const refreshToken = async (token: string) => {
-  let decodedData;
+  let decodedData = null;
   try {
-    decodedData = verifyToken(token, "health-care");
+    decodedData = verifyToken(token, config.jwt.refresh_token_secret as string);
   } catch (error) {
-    throw new Error("Your are not Authorized!");
+    throw new ApiError(httpStatus.FORBIDDEN, "Invalid Refresh Token");
   }
 
-  const userData = await prisma.user.findUniqueOrThrow({
+  const { userId } = decodedData;
+
+  const isUserExist = await prisma.user.findUnique({
     where: {
-      email: decodedData.email,
+      id: userId,
       status: UserStatus.ACTIVE,
     },
   });
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User does not exist");
+  }
 
   const jwtPayload = {
-    userId: userData.id,
-    email: userData.email,
-    role: userData.role,
+    userId: isUserExist.id,
+    email: isUserExist.email,
+    role: isUserExist.role,
   };
   const accessToken = generateToken(
     jwtPayload,
@@ -73,7 +80,6 @@ const refreshToken = async (token: string) => {
 
   return {
     accessToken,
-    needPasswordChange: userData.needPasswordChange,
   };
 };
 

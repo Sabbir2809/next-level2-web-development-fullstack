@@ -12,14 +12,14 @@ const checkAuth = (...roles: string[]) => {
       if (!token) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "Your are not Authorized!");
       }
+      let decodedData = null;
+      decodedData = verifyToken(token, config.jwt.jwt_secret as Secret);
+      req.user = decodedData;
 
-      const decodedData = verifyToken(token, config.jwt.jwt_secret as Secret);
-
+      // role based guard
       if (roles.length && !roles.includes(decodedData.role)) {
         throw new ApiError(httpStatus.FORBIDDEN, "Forbidden Access");
       }
-
-      req.user = decodedData;
       next();
     } catch (error) {
       next(error);

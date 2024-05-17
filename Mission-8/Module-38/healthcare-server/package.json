@@ -2,12 +2,14 @@
   "name": "healthcare-server",
   "version": "1.0.0",
   "main": "server.js",
-  "repository": "https://github.com/Sabbir2809/next-level2-web-development-fullstack/tree/main/Mission-8/Module-38",
+  "repository": "",
   "scripts": {
-    "start": "node ./dist/server.js",
+    "dev": "tsnd --respawn ./src/server.ts",
+    "prod": "NODE_ENV=production tsnd --respawn src/server.ts",
     "build": "tsc",
-    "seed": "node ./prisma/seed.ts",
-    "dev": "tsnd --respawn ./src/server.ts"
+    "start": "node ./dist/server.js",
+    "prisma:migrate": "npx prisma migrate dev",
+    "seed": "tsnd --respawn ./prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.11.0",

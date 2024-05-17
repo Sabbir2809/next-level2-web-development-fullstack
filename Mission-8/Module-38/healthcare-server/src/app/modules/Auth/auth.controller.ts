@@ -1,5 +1,6 @@
 import httpStatus from "http-status";
 import { JwtPayload } from "jsonwebtoken";
+import config from "../../config";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { AuthServices } from "./auth.service";
@@ -8,10 +9,13 @@ const login = catchAsync(async (req, res) => {
   const result = await AuthServices.login(req.body);
 
   const { refreshToken } = result;
-  res.cookie("refreshToken", refreshToken, {
-    secure: false,
+  // set refresh token into cookie
+  const cookieOptions = {
+    secure: config.env === "production",
     httpOnly: true,
-  });
+  };
+
+  res.cookie("refreshToken", refreshToken, cookieOptions);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -27,6 +31,14 @@ const login = catchAsync(async (req, res) => {
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
   const result = await AuthServices.refreshToken(refreshToken);
+
+  // set refresh token into cookie
+  // const cookieOptions = {
+  //   secure: config.env === "production",
+  //   httpOnly: true,
+  // };
+
+  // res.cookie("refreshToken", refreshToken, cookieOptions);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

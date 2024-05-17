@@ -1,7 +1,11 @@
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 
 // generate token
-export const generateToken = (payload: any, secret: Secret, expiresIn: string) => {
+export const generateToken = (
+  payload: Record<string, unknown>,
+  secret: Secret,
+  expiresIn: string
+): string => {
   return jwt.sign(payload, secret, {
     algorithm: "HS256",
     expiresIn,
@@ -9,6 +13,6 @@ export const generateToken = (payload: any, secret: Secret, expiresIn: string) =
 };
 
 // verify jwt token
-export const verifyToken = (token: string, secret: Secret) => {
+export const verifyToken = (token: string, secret: Secret): JwtPayload => {
   return jwt.verify(token, secret) as JwtPayload;
 };

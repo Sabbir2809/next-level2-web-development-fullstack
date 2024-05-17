@@ -7,7 +7,7 @@ import prisma from "../../utils/prisma";
 const dashboardMetadataFromDB = async (user: JwtPayload) => {
   let metaData;
   switch (user.role) {
-    case UserRole.SUER_ADMIN:
+    case UserRole.SUPER_ADMIN:
       metaData = getSuperAdminMetadata();
       break;
     case UserRole.ADMIN:

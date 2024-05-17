@@ -7,17 +7,17 @@ import { UserControllers } from "./user.controller";
 import { UserValidationSchemes } from "./user.validation";
 const router = Router();
 
-router.get("/", checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN), UserControllers.getAllFromDB);
+router.get("/", checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN), UserControllers.getAllFromDB);
 
 router.get(
   "/me",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   UserControllers.getMyProfile
 );
 
 router.post(
   "/create-admin",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = UserValidationSchemes.createAdmin.parse(JSON.parse(req.body.data));
@@ -27,7 +27,7 @@ router.post(
 
 router.post(
   "/create-doctor",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = UserValidationSchemes.createDoctor.parse(JSON.parse(req.body.data));
@@ -46,14 +46,14 @@ router.post(
 
 router.patch(
   "/:id/status",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   validationRequest(UserValidationSchemes.changeProfileStatus),
   UserControllers.changeProfileStatus
 );
 
 router.patch(
   "/update-my-profile",
-  checkAuth(UserRole.SUER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   fileUploader.upload.single("file"),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
