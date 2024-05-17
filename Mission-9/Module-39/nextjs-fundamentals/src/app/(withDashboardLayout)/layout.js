@@ -5,7 +5,7 @@ const DashboardLayout = ({ children }) => {
       <div className="drawer-content flex flex-col items-center justify-center">
         {/* Page content here */}
         <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
-          Open drawer
+          Sidebar
         </label>
         {children}
       </div>
@@ -14,10 +14,10 @@ const DashboardLayout = ({ children }) => {
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
           {/* Sidebar content here */}
           <li>
-            <a>Sidebar Item 1</a>
+            <a>Dashboard</a>
           </li>
           <li>
-            <a>Sidebar Item 2</a>
+            <a>Profile</a>
           </li>
         </ul>
       </div>

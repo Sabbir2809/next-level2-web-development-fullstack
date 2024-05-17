@@ -1,6 +1,26 @@
 import Link from "next/link";
 
 const Navbar = () => {
+  const navbarItems = (
+    <>
+      <li>
+        <Link href="/">Home</Link>
+      </li>
+      <li>
+        <Link href="/about">About</Link>
+      </li>
+      <li>
+        <Link href="/contact">Contact</Link>
+      </li>
+      <li>
+        <Link href="/news">News</Link>
+      </li>
+
+      <li>
+        <Link href="/products/product">Products</Link>
+      </li>
+    </>
+  );
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -23,23 +43,7 @@ const Navbar = () => {
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <a>Parent</a>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
+            {navbarItems}
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost text-xl">
@@ -47,20 +51,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/about">About</Link>
-          </li>
-          <li>
-            <Link href="/products/product">Products</Link>
-          </li>
-          <li>
-            <Link href="/contact">Contact</Link>
-          </li>
-        </ul>
+        <ul className="menu menu-horizontal px-1">{navbarItems}</ul>
       </div>
       <div className="navbar-end">
         <a className="btn">Button</a>

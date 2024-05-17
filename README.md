@@ -115,3 +115,7 @@ Boost my Web Development Career By Learning And Mastering Advanced React, Redux,
 ### Module-49: Building a Next.Js Project Part-7
 
 ### Module-50: Building a Next.Js Project Part-8
+
+### Module-51: Building a Next.Js Project Part-9
+
+### Module-52: Building a Next.Js Project Part-10
