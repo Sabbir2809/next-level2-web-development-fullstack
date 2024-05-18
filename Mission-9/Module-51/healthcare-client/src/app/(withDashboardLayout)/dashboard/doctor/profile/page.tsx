@@ -3,7 +3,7 @@ import HAutoFileUploader from "@/components/Forms/HAutoFileUploader";
 import { useGetUserProfileQuery, useUpdateUserProfileMutation } from "@/redux/api/userApi";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { Box, Button, CircularProgress, Container, Grid } from "@mui/material";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import Image from "next/image";
 import { useState } from "react";
@@ -26,14 +26,17 @@ const ProfilePage = () => {
   return (
     <>
       <ProfileUpdateModal open={open} setOpen={setOpen} id={data?.id}></ProfileUpdateModal>
-      <Container>
+      <Container
+        sx={{
+          mt: 4,
+        }}>
         {isLoading ? (
           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <CircularProgress disableShrink />;
           </Box>
         ) : (
-          <Grid2 container spacing={2}>
-            <Grid xs={12} md={4}>
+          <Grid2 container spacing={4}>
+            <Grid2 xs={12} md={4}>
               <Box
                 sx={{
                   height: 300,
@@ -43,29 +46,30 @@ const ProfilePage = () => {
                 }}>
                 <Image src={data?.profilePhoto} alt="profile avatar" width={400} height={300} />
               </Box>
-              {isUploading ? (
-                <CircularProgress disableShrink />
-              ) : (
-                <HAutoFileUploader
-                  name="file"
-                  label="Choose"
-                  icon={<CloudUploadIcon />}
-                  onFileUpload={fileUploadHandler}
-                  variant="text"
-                  sx={{
-                    width: "100%",
-                    mt: 1,
-                  }}
-                />
-              )}
+              <Box my={1}>
+                {isUploading ? (
+                  <CircularProgress disableShrink />
+                ) : (
+                  <HAutoFileUploader
+                    name="file"
+                    label="Choose"
+                    icon={<CloudUploadIcon />}
+                    onFileUpload={fileUploadHandler}
+                    variant="text"
+                    sx={{
+                      width: "100%",
+                    }}
+                  />
+                )}
+              </Box>
               <Button fullWidth endIcon={<ModeEditIcon />} onClick={() => setOpen(true)}>
                 Edit My Profile
               </Button>
-            </Grid>
+            </Grid2>
 
-            <Grid xs={12} md={8}>
+            <Grid2 xs={12} md={8}>
               <DoctorInformation data={data} />
-            </Grid>
+            </Grid2>
           </Grid2>
         )}
       </Container>

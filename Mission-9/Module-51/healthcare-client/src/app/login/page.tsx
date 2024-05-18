@@ -7,7 +7,6 @@ import { storeUserInfo } from "@/services/auth.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Box, Button, Container, Grid, Link, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -25,7 +24,6 @@ const loginValidationSchema = z.object({
 
 const LoginPage = () => {
   // useRouter hook
-  const router = useRouter();
   const [error, setError] = useState("");
 
   // login onSubmit handler
@@ -39,8 +37,6 @@ const LoginPage = () => {
         storeUserInfo({ accessToken: res?.data?.accessToken });
         // success toast message
         toast.success(res?.message);
-        // navigate
-        router.push("/dashboard");
       } else {
         setError(res?.message);
       }
