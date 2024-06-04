@@ -8,11 +8,7 @@ const router = Router();
 
 router.get("/", DoctorControllers.getAllFromDB);
 
-router.get(
-  "/:id",
-  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
-  DoctorControllers.getIdFromDB
-);
+router.get("/:id", DoctorControllers.getIdFromDB);
 
 router.patch(
   "/:id",

@@ -2,7 +2,7 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
 const Specialist = async () => {
-  const res = await fetch("http://localhost:5000/api/v1/specialties", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/specialties`, {
     next: {
       revalidate: 30,
     },

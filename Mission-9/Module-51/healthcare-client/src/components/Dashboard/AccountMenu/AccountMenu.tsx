@@ -1,4 +1,3 @@
-import { removeFromLocalStorage } from "@/utils/local-storage";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Logout from "@mui/icons-material/Logout";
 import Avatar from "@mui/material/Avatar";
@@ -11,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import logoutUser from "../../../services/actions/logoutUser";
 
 const menuStyles = {
   paper: {
@@ -53,8 +53,7 @@ const AccountMenu = () => {
   };
   const handleLogout = () => {
     setAnchorEl(null);
-    removeFromLocalStorage("accessToken");
-    router.push("/login");
+    logoutUser(router);
   };
 
   return (

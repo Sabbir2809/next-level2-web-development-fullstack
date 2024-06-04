@@ -21,16 +21,6 @@ const getAllFromDB = async (params: IDoctorFilterRequest, options: TPaginationOp
       })),
     });
   }
-  // specific field
-  if (Object.keys(filterData).length > 0) {
-    andConditions.push({
-      AND: Object.keys(filterData).map((key) => ({
-        [key]: {
-          equals: (filterData as any)[key],
-        },
-      })),
-    });
-  }
 
   // doctor > doctorSpecialties > specialties -> title
   if (specialties && specialties.length > 0) {
@@ -45,6 +35,17 @@ const getAllFromDB = async (params: IDoctorFilterRequest, options: TPaginationOp
           },
         },
       },
+    });
+  }
+
+  // specific field
+  if (Object.keys(filterData).length > 0) {
+    andConditions.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
     });
   }
 
@@ -67,6 +68,11 @@ const getAllFromDB = async (params: IDoctorFilterRequest, options: TPaginationOp
             averageRating: "desc",
           },
     include: {
+      review: {
+        select: {
+          rating: true,
+        },
+      },
       doctorSpecialties: {
         include: {
           specialties: true,
@@ -90,10 +96,25 @@ const getAllFromDB = async (params: IDoctorFilterRequest, options: TPaginationOp
 };
 
 const getIdFromDB = async (id: string): Promise<Doctor | null> => {
-  const result = await prisma.doctor.findUniqueOrThrow({
+  const result = await prisma.doctor.findUnique({
     where: {
       id,
       isDeleted: false,
+    },
+    include: {
+      doctorSpecialties: {
+        select: {
+          specialties: {
+            select: {
+              id: true,
+              icon: true,
+              title: true,
+            },
+          },
+        },
+      },
+      doctorSchedules: true,
+      review: true,
     },
   });
   return result;

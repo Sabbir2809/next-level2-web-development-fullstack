@@ -23,7 +23,7 @@ export const doctorScheduleApi = baseApi.injectEndpoints({
       },
       transformResponse: (response: any, meta: TMeta) => {
         return {
-          doctorSchedules: response.data,
+          doctorSchedules: response,
           meta,
         };
       },

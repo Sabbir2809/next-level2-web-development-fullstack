@@ -71,7 +71,7 @@ const SchedulesPage = () => {
 
   return (
     <Box>
-      <Button onClick={() => setIsModalOpen(true)}>Create Specialty</Button>
+      <Button onClick={() => setIsModalOpen(true)}>Create Schedules</Button>
       <ScheduleModal open={isModalOpen} setOpen={setIsModalOpen} />
       <Box my={5}>Display Schedule</Box>
       {!isLoading ? (

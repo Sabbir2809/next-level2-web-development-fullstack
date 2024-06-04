@@ -7,6 +7,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
+import KeyIcon from "@mui/icons-material/Key";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import TryIcon from "@mui/icons-material/Try";
@@ -19,6 +20,11 @@ const drawerMenuItem = (role: UserRole): IDrawerMenuItem[] => {
       title: "Profile",
       path: `${role}/profile`,
       icon: AccountCircleIcon,
+    },
+    {
+      title: "Change Password",
+      path: `change-password`,
+      icon: KeyIcon,
     },
   ];
 

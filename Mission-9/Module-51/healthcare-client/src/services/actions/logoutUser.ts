@@ -6,7 +6,7 @@ const logoutUser = (router: AppRouterInstance) => {
   localStorage.removeItem(authKey);
   deleteCookies([authKey, "refreshToken"]);
   router.push("/");
-  window.location.pathname = "/";
+  router.refresh();
 };
 
 export default logoutUser;

@@ -10,9 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 const TopRatedDoctors = async () => {
-  const res = await fetch("http://localhost:5000/api/v1/doctor?page=1&limit=3");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/doctor?page=1&limit=3`);
   const { data: doctors } = await res.json();
 
   return (
@@ -42,7 +43,17 @@ const TopRatedDoctors = async () => {
           {doctors.map((doctor: any) => (
             <Grid item key={doctor.id} md={4}>
               <Card>
-                <Box>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: 400,
+                    "& img": {
+                      width: "100%",
+                      height: "100%",
+                      overflow: "hidden",
+                      objectFit: "cover",
+                    },
+                  }}>
                   {doctor.profilePhoto ? (
                     <Image src={doctor.profilePhoto} alt={doctor.name} width={500} height={300} />
                   ) : null}
@@ -76,6 +87,8 @@ const TopRatedDoctors = async () => {
             textAlign: "center",
           }}>
           <Button
+            component={Link}
+            href="/doctors"
             variant="outlined"
             sx={{
               marginTop: "20px",

@@ -112,6 +112,7 @@ const changePassword = async (
   });
 
   return {
+    success: true,
     message: "Password Changed Successfully",
   };
 };
@@ -149,7 +150,7 @@ const forgetPassword = async (email: string) => {
   );
 };
 
-const resetPassword = async (token: string, payload: { id: string; password: string }) => {
+const resetPassword = async (token: string, payload: { id: string; newPassword: string }) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: payload.id,
@@ -162,7 +163,7 @@ const resetPassword = async (token: string, payload: { id: string; password: str
     throw new ApiError(httpStatus.FORBIDDEN, "Forbidden Access");
   }
 
-  const hashPassword: string = await bcrypt.hash(payload.password, 8);
+  const hashPassword: string = await bcrypt.hash(payload.newPassword, 8);
 
   await prisma.user.update({
     where: {

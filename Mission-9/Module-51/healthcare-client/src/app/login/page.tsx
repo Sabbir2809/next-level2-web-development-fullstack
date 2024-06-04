@@ -96,11 +96,11 @@ const LoginPage = () => {
               </Grid>
 
               {/* Forget Password Page */}
-              <Typography component="p" fontWeight={300} textAlign="end" marginBottom="1">
-                <Link href="/forget-password" className="text-blue-500">
+              <Link href="/forget-password">
+                <Typography component="p" fontWeight={300} textAlign="end" marginBottom="1">
                   Forget Password?
-                </Link>
-              </Typography>
+                </Typography>
+              </Link>
 
               <Button
                 type="submit"

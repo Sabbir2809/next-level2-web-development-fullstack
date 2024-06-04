@@ -9,9 +9,17 @@ export const loginUser = async (data: FieldValues) => {
     credentials: "include",
   });
   const userInfo = await res.json();
+
+  if (!userInfo.success) {
+    return userInfo;
+  }
+
+  const changePasswordRequired = userInfo.data.needPasswordChange;
+
   if (userInfo.data.accessToken) {
     setAccessToken(userInfo.data.accessToken, {
       redirect: "/dashboard",
+      changePasswordRequired,
     });
   }
   return userInfo;

@@ -4,7 +4,11 @@ import checkAuth from "../../middlewares/checkAuth";
 import { DoctorScheduleControllers } from "./doctorSchedule.controller";
 const router = Router();
 
-router.get("/", checkAuth(UserRole.DOCTOR), DoctorScheduleControllers.getAllDoctorSchedules);
+router.get(
+  "/",
+  checkAuth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  DoctorScheduleControllers.getAllDoctorSchedules
+);
 
 router.get("/my-schedule", checkAuth(UserRole.DOCTOR), DoctorScheduleControllers.getMySchedules);
 

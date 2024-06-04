@@ -33,12 +33,12 @@ const refreshToken = catchAsync(async (req, res) => {
   const result = await AuthServices.refreshToken(refreshToken);
 
   // set refresh token into cookie
-  // const cookieOptions = {
-  //   secure: config.env === "production",
-  //   httpOnly: true,
-  // };
+  const cookieOptions = {
+    secure: config.env === "production",
+    httpOnly: true,
+  };
 
-  // res.cookie("refreshToken", refreshToken, cookieOptions);
+  res.cookie("refreshToken", refreshToken, cookieOptions);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -67,8 +67,11 @@ const forgetPassword = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Check Your Email Address",
-    data: null,
+    message: "Password changed successfully",
+    data: {
+      success: true,
+      message: "Check Your Email Address!",
+    },
   });
 });
 
@@ -80,7 +83,10 @@ const resetPassword = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Reset Password Successfully",
-    data: null,
+    data: {
+      success: true,
+      message: "Password Reset successfully",
+    },
   });
 });
 
