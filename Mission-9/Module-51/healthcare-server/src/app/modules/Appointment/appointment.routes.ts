@@ -14,7 +14,7 @@ router.get(
 );
 
 router.get(
-  "/my-appointment",
+  "/my-appointments",
   checkAuth(UserRole.PATIENT, UserRole.DOCTOR),
   AppointmentControllers.getMyAppointment
 );

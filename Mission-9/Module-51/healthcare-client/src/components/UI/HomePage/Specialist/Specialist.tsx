@@ -1,5 +1,6 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 const Specialist = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/specialties`, {
@@ -48,7 +49,9 @@ const Specialist = async () => {
                   border: "1px solid #1576FD",
                   cursor: "pointer",
                 },
-              }}>
+              }}
+              component={Link}
+              href={`/doctors?specialties=${specialty.title}`}>
               {specialty.icon ? (
                 <Image src={specialty.icon} alt="Specialty Icon" width={100} height={100} />
               ) : null}

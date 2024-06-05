@@ -3,7 +3,7 @@ import { useGetMyScheduleQuery } from "@/redux/api/doctorScheduleApi";
 import { Box, CircularProgress } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
-const MySchedules = () => {
+const DoctorAppointmentsSchedules = () => {
   const { data, isLoading } = useGetMyScheduleQuery({});
   // console.log(data.data);
 
@@ -31,4 +31,4 @@ const MySchedules = () => {
   );
 };
 
-export default MySchedules;
+export default DoctorAppointmentsSchedules;

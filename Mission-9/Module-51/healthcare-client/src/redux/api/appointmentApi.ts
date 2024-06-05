@@ -8,7 +8,7 @@ export const appointmentApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/appointment",
         method: "POST",
-        data,
+        data: data,
       }),
       invalidatesTags: [tagTypes.appointment],
     }),

@@ -36,7 +36,6 @@ const DoctorScheduleSlots = ({ id }: { id: string }) => {
 
   const { data, isLoading } = useGetAllDoctorSchedulesQuery({ ...query });
   const doctorSchedules = data?.doctorSchedules;
-  console.log(data);
 
   const currentDate = new Date();
   const today = currentDate.toLocaleDateString("en-US", { weekday: "long" });
@@ -80,10 +79,7 @@ const DoctorScheduleSlots = ({ id }: { id: string }) => {
 
         if (res.id) {
           const response = await initialPayment(res.id).unwrap();
-
-          if (response.paymentUrl) {
-            router.push(response.paymentUrl);
-          }
+          router.push(response.paymentUrl);
         }
       }
     } catch (error) {

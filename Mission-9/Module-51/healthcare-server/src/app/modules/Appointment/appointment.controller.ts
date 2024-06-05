@@ -29,7 +29,8 @@ const getMyAppointment = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Get My Appointment Fetched Successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 
@@ -44,7 +45,8 @@ const getAllAppointments = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Get All Appointments Fetched Successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 

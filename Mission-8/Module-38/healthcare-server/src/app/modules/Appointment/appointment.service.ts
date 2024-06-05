@@ -6,20 +6,23 @@ import ApiError from "../../errors/ApiError";
 import { TPaginationOptions } from "../../types/pagination";
 import calculatePagination from "../../utils/pagination";
 import prisma from "../../utils/prisma";
+import { generateTransactionId } from "../Payment/payment.utlis";
 
 const createAppointmentIntoDB = async (user: JwtPayload, payload: any) => {
-  // patient
-  const patientData = await prisma.patient.findUniqueOrThrow({
-    where: {
-      email: user.email,
-      isDeleted: false,
-    },
-  });
+  const { doctorId, scheduleId } = payload;
 
   // doctor
   const doctorData = await prisma.doctor.findUniqueOrThrow({
     where: {
-      id: payload.doctorId,
+      id: doctorId,
+      isDeleted: false,
+    },
+  });
+
+  // patient
+  const patientData = await prisma.patient.findUniqueOrThrow({
+    where: {
+      email: user?.email,
       isDeleted: false,
     },
   });
@@ -27,19 +30,29 @@ const createAppointmentIntoDB = async (user: JwtPayload, payload: any) => {
   // doctorSchedule
   const doctorScheduleData = await prisma.doctorSchedules.findFirstOrThrow({
     where: {
-      doctorId: doctorData.id,
-      scheduleId: payload.scheduleId,
+      doctorId: doctorId,
+      scheduleId: scheduleId,
       isBooked: false,
     },
   });
 
+  // Check if an appointment already exists with the same scheduleId
+  const existingAppointment = await prisma.appointment.findUnique({
+    where: {
+      scheduleId: scheduleId,
+    },
+  });
+
+  if (existingAppointment) {
+    throw new Error("An appointment already exists for the provided scheduleId");
+  }
+
   // generate video calling id
-  const videoCallingId: string = await uuidv4();
+  const videoCallingId: string = uuidv4();
 
   // transaction
-  const result = await prisma.$transaction(async (tc) => {
-    // create appointment
-    const appointmentData = await tc.appointment.create({
+  return await prisma.$transaction(async (transactionClient) => {
+    const result = await transactionClient.appointment.create({
       data: {
         patientId: patientData.id,
         doctorId: doctorData.id,
@@ -49,40 +62,32 @@ const createAppointmentIntoDB = async (user: JwtPayload, payload: any) => {
       include: {
         doctor: true,
         schedule: true,
-        patient: true,
       },
     });
 
-    // update schedules
-    await tc.doctorSchedules.update({
+    await transactionClient.doctorSchedules.updateMany({
       where: {
-        doctorId_scheduleId: {
-          doctorId: doctorData.id,
-          scheduleId: doctorScheduleData.scheduleId,
-        },
+        doctorId: doctorData.id,
+        scheduleId: doctorScheduleData.scheduleId,
       },
       data: {
         isBooked: true,
-        appointmentId: appointmentData.id,
+        appointmentId: result.id,
       },
     });
 
-    // Healthcare-DateTime-
-    const today = new Date();
-    const transactionId = `Healthcare-${today.getFullYear()}${today.getMonth()}${today.getDay()}${today.getHours()}`;
+    const transactionId: string = generateTransactionId(result.id);
 
-    await tc.payment.create({
+    await transactionClient.payment.create({
       data: {
-        appointmentId: appointmentData.id,
-        amount: doctorData.appointmentFee,
+        appointmentId: result.id,
+        amount: result.doctor.appointmentFee,
         transactionId,
       },
     });
 
-    return appointmentData;
+    return result;
   });
-
-  return result;
 };
 
 const getMyAppointmentFromDB = async (
@@ -134,7 +139,7 @@ const getMyAppointmentFromDB = async (
           },
     include:
       user.role === UserRole.PATIENT
-        ? { doctor: true, schedule: true }
+        ? { doctor: true, schedule: true, patient: true }
         : {
             patient: {
               include: {

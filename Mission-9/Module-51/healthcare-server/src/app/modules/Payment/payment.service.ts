@@ -19,6 +19,10 @@ const initPayment = async (appointmentId: string) => {
       },
     });
 
+    if (paymentData.status === PaymentStatus.PAID) {
+      throw new ApiError(httpStatus.BAD_REQUEST, "You already pay for the appointment!");
+    }
+
     const initPaymentData = {
       amount: paymentData.amount,
       transactionId: paymentData.transactionId,
@@ -30,7 +34,7 @@ const initPayment = async (appointmentId: string) => {
 
     const result = await SSLCommerzServices.initPayment(initPaymentData);
     return {
-      paymentURL: result.GatewayPageURL,
+      paymentUrl: result.GatewayPageURL,
     };
   } catch (error) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Payment Error!");
@@ -53,22 +57,22 @@ const validatePayment = async (payload: any) => {
   // }
 
   // :::::development(locally):::::
-  const response = payload;
+  const { tran_id } = payload;
 
   await prisma.$transaction(async (tx) => {
-    const updatedPayemntData = await tx.payment.update({
+    const updatedPaymentData = await tx.payment.update({
       where: {
-        transactionId: response.tran_id,
+        transactionId: tran_id,
       },
       data: {
         status: PaymentStatus.PAID,
-        paymentGatewayData: response,
+        paymentGatewayData: tran_id,
       },
     });
 
     await tx.appointment.update({
       where: {
-        id: updatedPayemntData.appointmentId,
+        id: updatedPaymentData.appointmentId,
       },
       data: {
         paymentStatus: PaymentStatus.PAID,
